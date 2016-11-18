@@ -1,5 +1,7 @@
 #!/bin/bash
 bash zsl.sh setup_finclude_cmd
+if [ $? -ne 0 ];then exit; fi
+
 `finclude $0 zsl.sh`
 echo $@ | grep -q "\-t" && TEST=echo || TEST=''
 
@@ -7,8 +9,8 @@ dir_vim=$HOME/.vim
 dir_auto=$dir_vim/autoload
 dir_bundle=$dir_vim/bundle
 vimrc=$HOME/.vimrc
-# bashrc=$HOME/.bashrc
-bashrc=$HOME/bashrc
+bashrc=$HOME/.bashrc
+
 
 vim_cfg_item=(
 'set nocompatible'	# vi兼容性设定
@@ -19,7 +21,7 @@ vim_cfg_item=(
 'set cindent'		# 使用 C/C++ 的自动缩进方式
 'set linebreak'		# 整词换行
 'set showmatch'		# 显示 括号匹配
-# 'set whichwrap=b,s,<,>,[,]' # 光标可从行首/末跳到另一行
+'set whichwrap=b,s,<,>,[,]' # 光标可从行首/末跳到另一行
 'set backspace=2'	# 使能 退格键
 'set mouse=a'		# 使能 鼠标
 'set pastetoggle=<F12>'	# F12 切换原文粘贴模式（此模式下暂停自动缩进等功能）
@@ -50,32 +52,37 @@ while [ $i -lt ${#vim_cfg_item[@]} ]; do
 done
 
 mkdir -p $dir_auto $dir_bundle
+
 cd $dir_auto
 
 # 插件管理器 pathogen
 plugin_mgr=("pathogen.vim" "https://tpo.pe/pathogen.vim")
 cfg_plugin_mgr=("execute pathogen#infect()" "syntax on" "filetype plugin indent on")
 HighLightStep 2 check ${plugin_mgr[0]} from ${plugin_mgr[1]}
-# $TEST curl -LSso ${plugin_mgr[0]} ${plugin_mgr[1]}
+$TEST curl -LSso ${plugin_mgr[0]} ${plugin_mgr[1]}
 if [ $? -ne 0 ];then exit; fi
 $TEST FindSetLines $vimrc "${cfg_plugin_mgr[0]}" "${cfg_plugin_mgr[@]:1}"
 
 
 cd $dir_bundle
 
+# 注释工具
+suits=("fvimSuits" "https://github.com/wordworld/fvimSuits.git" "fvimSuits")
+GitCheck "${suits[@]}"
+
 # 自动完成括号输入 auto-pairs
 brackets_complete=("autopairs.vim" "git://github.com/jiangmiao/auto-pairs.git" "auto-pairs")
-# GitCheck "${brackets_complete[@]}"
+GitCheck "${brackets_complete[@]}"
 
 # 文件目录树 NERDTree
 directory_tree=("NERDTree.vim" "git://github.com/scrooloose/nerdtree.git" "nerdtree")
 cfg_directory_tree=( "map <C-n> :NERDTreeToggle<CR>")
-# GitCheck "${directory_tree[@]}"
+GitCheck "${directory_tree[@]}"
 $TEST FindSetLines $vimrc "${cfg_directory_tree[0]}"
 
 # 文件标签
 tab_label=( "tabbar.vim" "git://github.com/humiaozuzu/TabBar.git" "TabBar")
-# GitCheck "${tab_label[@]}"
+GitCheck "${tab_label[@]}"
 
 # 符号定义列表 TagList
 taglist=("taglist.zip" "http://www.vim.org/scripts/download_script.php?src_id=19574" "taglist")
@@ -87,9 +94,9 @@ cfg_taglist=(
 	"let Tlist_Sort_Type=\"name\""
 	)
 HighLightStep 2 check ${taglist[0]} from ${taglist[1]}
-# $TEST wget ${taglist[1]} -O ${taglist[0]}
+$TEST wget ${taglist[1]} -O ${taglist[0]}
 if [ $? -ne 0 ];then exit; fi
-# $TEST unzip -o ${taglist[0]} -d ${taglist[2]}
-# $TEST rm -f ${taglist[0]}
+$TEST unzip -o ${taglist[0]} -d ${taglist[2]}
+$TEST rm -f ${taglist[0]}
 $TEST FindSetLines $vimrc "${cfg_taglist[0]}" "${cfg_taglist[@]:1}"
 
