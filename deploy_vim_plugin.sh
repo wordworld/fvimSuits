@@ -67,7 +67,7 @@ $TEST FindSetLines $vimrc "${cfg_plugin_mgr[0]}" "${cfg_plugin_mgr[@]:1}"
 cd $dir_bundle
 
 # 注释工具
-suits=("fvimSuits" "https://github.com/wordworld/fvimSuits.git" "fvimSuits")
+suits=("fvimSuits" "git://github.com/wordworld/fvimSuits.git" "fvimSuits")
 GitCheck "${suits[@]}"
 
 # 自动完成括号输入 auto-pairs
