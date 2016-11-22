@@ -44,6 +44,7 @@ vim_cfg_item=(
 'map <F7> :w<CR> :!clear<CR> :!g++ -std=c++11 -g % -o %:h/%:r<CR>'	# F7 g++编译
 'map <F9> :!chmod +x %:h/%:r<CR> :!clear<CR> :!./%:h/%:r<CR>'		# F9 运行
 'map <F5> :!gdb %:h/%:r<CR>'						# F5 gdb调试
+"au BufReadPost '*' if line(\"'\\\"\") > 0 && line(\"'\\\"\") <= line(\"\$\") | exe \"normal g'\\\"\" | endif" # 记住上次打开位置
 )
 i=0
 while [ $i -lt ${#vim_cfg_item[@]} ]; do
@@ -52,7 +53,6 @@ while [ $i -lt ${#vim_cfg_item[@]} ]; do
 done
 
 mkdir -p $dir_auto $dir_bundle
-
 cd $dir_auto
 
 # 插件管理器 pathogen
@@ -69,6 +69,7 @@ cd $dir_bundle
 # 注释工具
 suits=("fvimSuits" "git://github.com/wordworld/fvimSuits.git" "fvimSuits")
 GitCheck "${suits[@]}"
+bash "${suits[2]}/build.sh" i
 
 # 自动完成括号输入 auto-pairs
 brackets_complete=("autopairs.vim" "git://github.com/jiangmiao/auto-pairs.git" "auto-pairs")
