@@ -4,8 +4,8 @@
 ##! 
 ##! @file	zsl.sh
 ##! @author	Fstone's ComMent Tool
-##! @date	2016-11-12
-##! @version	0.1.2
+##! @date	2016-11-22
+##! @version	0.1.3
 ############################################################
 if [ ! "$__ZSL_H__" ] ;then
 __ZSL_H__="zsl.sh"
@@ -59,7 +59,7 @@ function GitCheck()
 	if [ -d "$dir" ]; then
 		$TEST cd $dir && $TEST git pull && $TEST cd ..
 	else
-		$TEST git clone $url
+		$TEST git clone $url $dir
 	fi
 	if [ $? -ne 0 ];then exit; fi
 }
@@ -174,17 +174,21 @@ function FindReplaceLine()
 	file=$1
 	pattern=$2
 	replace=$3
-	lineContent=`grep -n "$pattern" $file`
+	lineContent=`grep -n "$pattern" "$file"`
 	if [ "$lineContent" ];then
 		lineNum=${lineContent%%:*}
 		sed -i $lineNum"c $replace" $file
 		# echo $lineNum:$file
+	# else
+		# lineNum=`sed -n '$=' $file` 	# 最大行号
+		# echo $lineNum
+		# sed -i $lineNum"a $replace" $file
 	fi
 }
 
 ##! @brief	查找前设置带前缀行的行
 ##! 
-##! 查找具有pattern的行，并替换其后面若干行（替换内容由$3-${!#}提供）；如果未找到，则在文件尾添加pattern行和替换内容行
+##! 查找具有pattern的行n，从第n行开始进行替换（替换内容由$3-${!#}提供）；如果未找到，则在文件尾添加替换内容行
 ##! @param	$1 文件
 ##! @param	$2 pattern行
 ##! @param	$3~${n+2} 替换pattern后面n行内容
@@ -213,21 +217,21 @@ function FindSetLines()
 	local lineNum
 	if [ "$lineContent" ];then 		# 找到 pattern
 		lineNum=${lineContent%%:*} 	# pattern 所在行号
-		i=1
-		while [ $i -le ${#replace[@]} ];do
+		i=0
+		while [ $i -lt ${#replace[@]} ];do
 			if [ $((lineNum+i)) -le $maxLineNum ];then
-				sed -i $((lineNum+i))"c ${replace[(i-1)]}" $file
+				sed -i $((lineNum+i))"c ${replace[(i)]}" $file
 			else
-				sed -i $((lineNum+i-1))"a ${replace[(i-1)]}" $file
+				sed -i $((lineNum+i-1))"a ${replace[(i)]}" $file
 			fi
 			((i++))
 		done
 	else # 未找到 pattern，在文件尾插入 pattern行 和 替换内容行
 		if [ ! $maxLineNum ];then
-			maxLineNum=0
+			echo >> $file
+			maxLineNum=1
 		fi
-		echo $pattern >> $file  	# 在文件末尾追加
-		lineNum=$((maxLineNum+1))
+		lineNum=$maxLineNum
 		i=0
 		while [ $i -lt ${#replace[@]} ];do
 			sed -i $((lineNum+i))"a ${replace[(i)]}" $file

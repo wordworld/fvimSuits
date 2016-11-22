@@ -102,6 +102,7 @@ if [ $sn -gt 0 ];then
 	fcmt_file="$build_dir/$plugin_dir/fcmt.vim"
 	dir_tag="let s:install_dir"
 	FindReplaceLine "$fcmt_file" "$dir_tag" "${dir_tag} = \'$build_dir/$plugin_dir\'"
-	# FindSetLines "$HOME/.vimrc" "\" Fstone's ComMent Tool" "source $fcmt_file"
+	fcmt_id="\" Fstone's ComMent Tool" 
+	# FindSetLines "$HOME/.vimrc" "$fcmt_id" "$fcmt_id" "source $fcmt_file"
 fi
 

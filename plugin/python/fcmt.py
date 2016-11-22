@@ -17,9 +17,8 @@ import datetime
 import re
 
 # 定制内容
-tag_author = "zhangshilei@zulong.com" 		# 作者
+tag_author = "fstone.zh@foxmail.com" 		# 作者
 UsrDecoratorCount 	= 60 			# 注释装饰符号数量，用于产生文件头的装饰框
-UsrRedundantPathPrefix 	= zsl.GetHomeDir()+"/" 	# 文件路径冗余前缀（用户根目录）
 
 # 标签
 BRIEF 	= "brief"		
@@ -72,7 +71,7 @@ class Tag:
 		import os.path
 		if( None != buf ):
 			Tag.value[ FILE ] = zsl.ParseFileName( buf.name )
-			Tag.value[ PATH ] = zsl.ParseFilePath( buf.name )[ len(UsrRedundantPathPrefix): ]
+			Tag.value[ PATH ] = zsl.ParseFilePath( buf.name )[ len(zsl.GetHomeDir()+"/"): ]
 		Tag.value[ DATE ] = datetime.date.today()
 
 

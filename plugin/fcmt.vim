@@ -14,11 +14,10 @@ if exists("g:fstone_comment")
 endif
 
 " 安装目录(以 / 开始的绝对路径)
-let s:install_dir = '/home/fstone/program/fcmt/plugin'
+let s:install_dir = '/home/fstone/git/fvimSuits/plugin'
 
 " 初始化
 python<<EOF
-import sys
 import vim
 sys.path.append( str( vim.eval( "s:install_dir" ) ) + "/python" )
 EOF
