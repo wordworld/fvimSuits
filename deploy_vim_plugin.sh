@@ -6,8 +6,8 @@
 ##! @file	deploy_vim_plugin.sh
 ##! @path	fvimSuits
 ##! @author	fstone.zh@foxmail.com
-##! @date	2016-11-22
-##! @version	0.1.1
+##! @date	2016-11-24
+##! @version	0.1.2
 ############################################################
 bash zsl.sh setup_finclude_cmd
 if [ $? -ne 0 ];then exit; fi
@@ -48,8 +48,6 @@ vim_cfg_item=(
 'set hlsearch'		# 匹配串 高亮显示
 'nnoremap s :w<CR>'	# s 保存
 'map <C-w> :q<CR>' 	# Ctrl+w 退出
-'map <C-z> <ESC>u'	# Ctrl+u 取消
-'map <C-y> <C-r>'	# Ctrl+y 重做
 'map <F7> :w<CR> :!clear<CR> :!g++ -std=c++11 -g % -o %:h/%:r<CR>'	# F7 g++编译
 'map <F9> :!chmod +x %:h/%:r<CR> :!clear<CR> :!./%:h/%:r<CR>'		# F9 运行
 'map <F5> :!gdb %:h/%:r<CR>'						# F5 gdb调试
@@ -119,4 +117,38 @@ cfg_taglist=(
 	)
 GitCheck "${taglist[@]}"
 $TEST FindSetLines $vimrc "${cfg_taglist[0]}" "${cfg_taglist[@]}"
+
+# 粘贴板
+clipboard=("yank-ring" "git://github.com/vim-scripts/YankRing.vim.git" "yank-ring")
+GitCheck "${clipboard[@]}"
+cfg_clipboard=("map <C-y> :YRShow<CR>")
+$TEST FindSetLines $vimrc "${cfg_clipboard[0]}" "${cfg_clipboard[@]}"
+
+# gdb调试
+gdb_runner=("conque-gdb" "git://github.com/vim-scripts/Conque-GDB.git" "conque-gdb")
+GitCheck "${gdb_runner[@]}"
+
+# c语言
+code_c=("c.vim" "https://github.com/vim-scripts/c.vim" "c")
+GitCheck "${code_c[@]}"
+
+# 词典
+# dict=("StarDict" "git://github.com/vim-scripts/vim-stardict.git" "StarDict")
+# cfg_dict=("nnoremap <leader>sc :StarDictCursor<CR>"
+	# "nnoremap <leader>sc :StarDictCursor<CR>"
+	# "nnoremap <leader>sc :StarDictCursor<CR>"
+	# "nnoremap <leader>sc :StarDictCursor<CR>")
+# GitCheck "${dict[@]}"
+# $TEST FindSetLines $vimrc "${cfg_dict[0]}" "${cfg_dict[@]}"
+
+# 配色
+color_theme=("PaperColor" "git://github.com/vim-scripts/PaperColor.vim.git" "PaperColor")
+cfg_color_theme=("let g:PaperColor_Dark_Override = { 'background' : '#1c1c1c', 'cursorline' : '#abcdef', 'matchparen' : '#3a3a3a', 'comment' : '#5f875f'  }"
+	"let g:PaperColor_Light_Override = { 'background' : '#abcdef', 'cursorline' : '#dfdfff', 'matchparen' : '#d6d6d6' , 'comment' : '#8e908c'  }"
+	"set t_Co=256"
+	"set background=dark"
+	"colorscheme PaperColor")
+GitCheck "${color_theme[@]}"
+sed -i 's/\r//g' $dir_bundle/${color_theme[2]}/colors/PaperColor.vim
+$TEST FindSetLines $vimrc "${cfg_color_theme[0]}" "${cfg_color_theme[@]}"
 
