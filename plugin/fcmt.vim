@@ -14,7 +14,7 @@ if exists("g:fstone_comment")
 endif
 
 " 安装目录(以 / 开始的绝对路径)
-let s:install_dir = '/home/fstone/git/fvimSuits/plugin'
+let s:install_dir = escape(expand('<sfile>:p:h'), '\')
 
 " 初始化
 python<<EOF

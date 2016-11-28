@@ -134,10 +134,7 @@ GitCheck "${code_c[@]}"
 
 # 词典
 # dict=("StarDict" "git://github.com/vim-scripts/vim-stardict.git" "StarDict")
-# cfg_dict=("nnoremap <leader>sc :StarDictCursor<CR>"
-	# "nnoremap <leader>sc :StarDictCursor<CR>"
-	# "nnoremap <leader>sc :StarDictCursor<CR>"
-	# "nnoremap <leader>sc :StarDictCursor<CR>")
+# cfg_dict=("nnoremap <leader>lw :StarDict<CR>"	"nnoremap <leader>lc :StarDictCursor<CR>")
 # GitCheck "${dict[@]}"
 # $TEST FindSetLines $vimrc "${cfg_dict[0]}" "${cfg_dict[@]}"
 
