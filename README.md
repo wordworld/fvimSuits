@@ -1,32 +1,33 @@
 vim套装 fvimSuits
 ====================
-fvimSuits 是一个帮助用户在 Linux 上快速搭建基于 vim 的 IDE ( 集成开发环境 ) 的辅助工具。它包含一个用于下载 vim 插件的部署脚本 deploy_vim_plugin.sh ，和作者编写的一个用于注释各类代码文件的 vim 插件 fcmt 。 \<br/\>
+fvimSuits 是一个帮助用户在 Linux 上快速搭建基于 vim 的 IDE ( 集成开发环境 ) 的辅助工具。它包含一个用于下载 vim 插件的部署脚本 deploy_vim_plugin.sh ，和作者编写的一个用于注释各类代码文件的 vim 插件 fcmt 。
 
 使用说明
 --------------------
-1. 首次安装，需要依赖git和互联网连接
-> (1) 安装git		：$sudo apt-get install git
-> (2) 下载fvimSuits	：$git clone git://github.com/wordworld/fvimSuits.git
-> (3) 部署vim插件	：$cd fvimSuits && ./deploy_vim_plugin.sh
-2. 部署已经下载好的 fvimSuits
-> (1) 复制 $HOME/.vim 整个目录到其他 Linux 主机 的 $HOME 目录
-> > (2) 本地部署		：$cd .vim/bundle/fcmt && ./portable_deploy_vim_plugin.sh
+### 1. 首次安装，需要依赖 git 和互联网连接
+(1) 安装git		：$sudo apt-get install git <br/>
+(2) 下载fvimSuits	：$git clone git://github.com/wordworld/fvimSuits.git <br/>
+(3) 部署vim插件	：$cd fvimSuits && ./deploy_vim_plugin.sh <br/>
+### 2. 部署已经下载好的 fvimSuits
+(1) 复制 $HOME/.vim 整个目录到其他 Linux 主机 的 $HOME 目录 <br/>
+(2) 本地部署		：$cd .vim/bundle/fcmt && ./portable_deploy_vim_plugin.sh
 
 插件简介
 --------------------
 ### 作者编写的插件
-		### 注释工具 fcmt
+		注释工具 fcmt
+		--------------------
 		快捷键 m （光标在文件前10行）：自动生成文件头注释，可自定义如作者信息、文件名、更新日期等内容
 		快捷键 m （光标在函数名所在行）：自动生成函数注释，可自定义包括摘要说明、参数、返回值等内容
 		快捷键 f ：注释/取消注释光标所在行
 		快捷键 Ctrl+l ：添加/删除间隔注释行
 
 ### 插件管理器 pathogen
-包含 ~/.vim/autoload/pathogen.vim 和 ~/.vim/bundle 目录 \<br/\>
-新的插件只需放在 ~/.vim/bundle 目录下，即完成安装
+包含 ~/.vim/autoload/pathogen.vim 和 ~/.vim/bundle 目录 <br/>
+新的插件只需放在 ~/.vim/bundle 目录下，即完成安装。
 
 ### 自动完成括号 auto-pairs
-当输入左括号，即自动补全右括号，光标回到括号中 \<br/\>
+当输入左括号，即自动补全右括号，光标回到括号中 <br/>
 对 () [] {} 均有效
 
 ### 文件目录树 NERDTree
