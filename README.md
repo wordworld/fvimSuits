@@ -2,17 +2,17 @@ vim套装 fvimSuits
 ====================
 fvimSuits 是一个帮助用户在 Linux 上快速搭建基于 vim 的 IDE ( 集成开发环境 ) 的辅助工具。它包含一个用于下载 vim 插件的部署脚本 deploy_vim_plugin.sh ，和作者编写的一个用于注释各类代码文件的 vim 插件 fcmt 。
 
-使用说明
+1.安装
 --------------------
-### 1. 首次安装，需要依赖 git 和互联网连接
-(1) 安装git		：$sudo apt-get install git <br/>
-(2) 下载fvimSuits	：$git clone git://github.com/wordworld/fvimSuits.git <br/>
-(3) 部署vim插件	：$cd fvimSuits && ./deploy_vim_plugin.sh <br/>
-### 2. 部署已经下载好的 fvimSuits
-(1) 复制 $HOME/.vim 整个目录到其他 Linux 主机 的 $HOME 目录 <br/>
-(2) 本地部署		：$cd .vim/bundle/fcmt && ./portable_deploy_vim_plugin.sh
+### 首次需 git 安装
+(1) 安装 git		：$sudo apt-get install git <br/>
+(2) 下载 fvimSuits	：$git clone git://github.com/wordworld/fvimSuits.git <br/>
+(3) 下载、部署插件 (下载过程用时较长，请耐心等待)：$cd fvimSuits && ./deploy_vim_plugin.sh <br/>
+### 移植已经安装好的 fvimSuits 到其他电脑
+(1) 复制整个 $HOME/.vim/ 目录到其他 Linux 主机的 $HOME 目录 <br/>
+(2) 部署插件		：$cd ~/.vim/bundle/fcmt && ./portable_deploy_vim_plugin.sh
 
-插件简介
+2.使用
 --------------------
 ### 作者编写的插件
 		注释工具 fcmt
