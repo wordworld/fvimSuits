@@ -90,7 +90,6 @@ cd $dir_bundle
 # 注释工具
 suits=("fvimSuits" "git://github.com/wordworld/fvimSuits.git" "fvimSuits")
 GitCheck "${suits[@]}"
-bash "${suits[2]}/build.sh" i
 
 # 自动完成括号输入 auto-pairs
 brackets_complete=("autopairs.vim" "git://github.com/jiangmiao/auto-pairs.git" "auto-pairs")
