@@ -28,7 +28,6 @@ function HighLightStep()
 {
 	((step++))
 	local highLightIdx=$1
-	((highLightIdx++))
 	local i=2
 	local msg=""
 	while [ $i -le $# ]; do
@@ -53,15 +52,21 @@ function HighLightStep()
 ##! @date	2016-11-18
 function GitCheck()
 {
-	HighLightStep 2 check $1 from $2
-	local dir=$3
-	local url=$2
-	if [ -d "$dir" ]; then
-		$TEST cd $dir && $TEST git pull && $TEST cd ..
-	else
-		$TEST git clone $url $dir
+	local name=$1
+	local dir=$2
+	local url=$3
+	if [ "$url" != "" ];then
+		if [ -d "$dir" ]; then
+			HighLightStep 4 git pull $name from $url
+			$TEST cd $dir && $TEST git pull && $TEST cd ..
+		else
+			HighLightStep 4 git clone $name from $url
+			$TEST git clone $url $dir
+		fi
+		if [ $? -ne 0 ];then exit; fi
+	else # local display
+		HighLightStep 3 config $name
 	fi
-	if [ $? -ne 0 ];then exit; fi
 }
 
 ##! @brief	调用shell脚本模块文件

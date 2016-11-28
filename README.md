@@ -4,8 +4,13 @@ fvimSuits 是一个帮助用户在 Linux 上快速搭建基于 vim 的 IDE ( 集
 
 使用说明
 --------------------
-1. 安装git \<br/\>
-2. 连接互联网后，在命令行执行 deploy_vim_plugin.sh \<br/\>
+1. 首次安装，需要依赖git和互联网连接
+> (1) 安装git		：$sudo apt-get install git
+> (2) 下载fvimSuits	：$git clone git://github.com/wordworld/fvimSuits.git
+> (3) 部署vim插件	：$cd fvimSuits && ./deploy_vim_plugin.sh
+2. 部署已经下载好的 fvimSuits
+> (1) 复制 $HOME/.vim 整个目录到其他 Linux 主机 的 $HOME 目录
+> > (2) 本地部署		：$cd .vim/bundle/fcmt && ./portable_deploy_vim_plugin.sh
 
 插件简介
 --------------------
