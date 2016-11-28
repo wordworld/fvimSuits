@@ -1,6 +1,7 @@
 vim套装 fvimSuits
 ====================
-fvimSuits 是一个帮助用户在 Linux 上快速搭建基于 vim 的 IDE ( 集成开发环境 ) 的辅助工具。它包含一个用于下载 vim 插件的部署脚本 deploy_vim_plugin.sh ，和作者编写的一个用于注释各类代码文件的 vim 插件 fcmt 。
+fvimSuits 是一个帮助用户在 Linux 上快速搭建基于 vim 的 IDE ( 集成开发环境 ) 的辅助工具。<br/>
+它包含一个用于下载 vim 插件的部署脚本 deploy_vim_plugin.sh ，和作者编写的一个用于注释各类代码文件的 vim 插件 fcmt 。
 
 1.安装
 --------------------
