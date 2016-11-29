@@ -283,7 +283,7 @@ class Lang:
 		tag_function 	= [ BRIEF, DETAIL, DETAIL, PARAM, OUTPUT, AUTHOR, DATE ]
 		def __init__( self ):
 			self.name 	= Lang.SHELL
-			self.syntax 	= [ "", ".sh", ".SH", ".shell", ".Shell", ".svr", ".svn", ".bashrc", ".bash_profile", ".gdb", ".dump" ]
+			self.syntax 	= [ "", ".sh", ".SH", ".shell", ".Shell", ".svr", ".svn", ".bashrc", ".bash_profile", ".gdb", ".dump", ".mk" ]
 			self.line 	= "# "
 			self.start 	= ""
 			self.middle 	= "##! "
