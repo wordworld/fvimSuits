@@ -9,7 +9,8 @@
 ##! @date	2016-11-24
 ##! @version	0.1.2
 ############################################################
-. portable_deploy_vim_plugin.sh
+if [ -f "zsl.sh" ];then	bash zsl.sh setup_finclude_cmd;fi
+`finclude $0 portable_deploy_vim_plugin.sh`
 if [ $? -ne 0 ];then exit; fi
 
 mkdir -p $dir_auto $dir_bundle

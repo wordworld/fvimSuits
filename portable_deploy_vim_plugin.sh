@@ -9,10 +9,10 @@
 ##! @date	2016-11-28
 ##! @version	0.1.0
 ############################################################
-bash zsl.sh setup_finclude_cmd
+if [ -f "zsl.sh" ];then	bash zsl.sh setup_finclude_cmd;fi
+`finclude $0 zsl.sh`
 if [ $? -ne 0 ];then exit; fi
 
-`finclude $0 zsl.sh`
 SetTEST $@
 
 dir_vim=$HOME/.vim
@@ -130,4 +130,3 @@ cfg_color_theme=("let g:PaperColor_Dark_Override = { 'background' : '#1c1c1c', '
 	"colorscheme PaperColor")
 GitCheck "${color_theme[@]:0:2}"
 $TEST FindSetLines $vimrc "${cfg_color_theme[0]}" "${cfg_color_theme[@]}"
-
