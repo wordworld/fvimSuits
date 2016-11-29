@@ -23,7 +23,7 @@ vim套装 fvimSuits
 		快捷键 Ctrl+l ：添加/删除间隔注释行
 
 ### 插件管理器 pathogen
-包含 ~/.vim/autoload/pathogen.vim 和 ~/.vim/bundle 目录 <br/>
+包含 ~/.vim/autoload/pathogen.vim 和 ~/.vim/bundle 目录。<br/>
 新的插件只需放在 ~/.vim/bundle 目录下，即完成安装。
 
 ### 自动完成括号 auto-pairs
@@ -40,7 +40,8 @@ vim套装 fvimSuits
 快捷键 Ctrl+a ：在右侧显示当前源代码文件中定义的符号
 
 ### 粘贴板管理 Yank-Ring
-快捷键 Ctrl+y ：在底部显示本地所有 terminal 中复制的内容，选中后按p进行粘贴。
+		快捷键 Ctrl+y ：在底部显示本地所有 terminal 中复制的内容
+		按p进行粘贴。
 
 ### 调试插件 congue-gdb
 
