@@ -13,7 +13,7 @@ bash zsl.sh setup_finclude_cmd
 if [ $? -ne 0 ];then exit; fi
 
 `finclude $0 zsl.sh`
-echo $@ | grep -q "\-t" && TEST=echo || TEST=''
+SetTEST $@
 
 dir_vim=$HOME/.vim
 dir_auto=$dir_vim/autoload

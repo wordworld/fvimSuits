@@ -11,9 +11,14 @@ if [ ! "$__ZSL_H__" ] ;then
 __ZSL_H__="zsl.sh"
 # ############################################################
 
-function Test()
+##! @brief	设置 TEST 变量
+##! 
+##! 当含有参数 -t 时，设置 TEST 为 echo 命令
+##! @author	fstone.zh@foxmail.com
+##! @date	2016-11-29
+function SetTEST()
 {
-	echo "zsl.sh test ok"
+	echo $@ | grep -q "\-t" && TEST=echo || TEST=''
 }
 
 ##! @brief	高亮显示步骤
@@ -21,7 +26,7 @@ function Test()
 ##! 
 ##! @param	$1 高亮第几个单词
 ##! @output	
-##! @author	zhangshilei@zulong.com
+##! @author	fstone.zh@foxmail.com
 ##! @date	2016-11-18
 step=0
 function HighLightStep()
@@ -48,7 +53,7 @@ function HighLightStep()
 ##! @param	$2 git url
 ##! @param	$3 本地目录
 ##! @output	
-##! @author	zhangshilei@zulong.com
+##! @author	fstone.zh@foxmail.com
 ##! @date	2016-11-18
 function GitCheck()
 {
@@ -76,7 +81,7 @@ function GitCheck()
 ##! @param	$2 文件路径
 ##! @param 	$3~$# 调用参数
 ##! @output	脚本模块输出
-##! @author	zhangshilei@zulong.com
+##! @author	fstone.zh@foxmail.com
 ##! @date	2016-10-27
 function Call()
 {
@@ -133,7 +138,7 @@ function GetFullPath()
 ##! 
 ##! @param	$1 变量值
 ##! @output	输出变量类型，如digit / string / bool
-##! @author	zhangshilei@zulong.com
+##! @author	fstone.zh@foxmail.com
 ##! @date	2016-09-27
 function TypeName()
 {
@@ -155,7 +160,7 @@ function TypeName()
 ##! 如果目录不存在，则创建它
 ##! @param	$1 目录名
 ##! @output	
-##! @author	zhangshilei@zulong.com
+##! @author	fstone.zh@foxmail.com
 ##! @date	2016-10-17
 function TryMakeDir()
 {
@@ -172,7 +177,7 @@ function TryMakeDir()
 ##! @param	$2 模式串
 ##! @param	$3 替换内容
 ##! @output	输出行号
-##! @author	zhangshilei@zulong.com
+##! @author	fstone.zh@foxmail.com
 ##! @date	2016-10-18
 function FindReplaceLine()
 {
@@ -198,7 +203,7 @@ function FindReplaceLine()
 ##! @param	$2 pattern行
 ##! @param	$3~${n+2} 替换pattern后面n行内容
 ##! @output	输出行号
-##! @author	zhangshilei@zulong.com
+##! @author	fstone.zh@foxmail.com
 ##! @date	2016-10-19
 function FindSetLines()
 {
@@ -250,7 +255,7 @@ function FindSetLines()
 ##! 
 ##! 
 ##! @output 	标准秒数（自UTC 时间 1970-01-01 00:00:00 以来所经过的秒数） 当前纳秒数
-##! @author	zhangshilei@zulong.com
+##! @author	fstone.zh@foxmail.com
 ##! @date	2016-10-26
 function TimeNow()
 {
@@ -264,7 +269,7 @@ function TimeNow()
 ##! 
 ##! @param	$1 	纳秒数
 ##! @output	毫秒数 "%03d"
-##! @author	zhangshilei@zulong.com
+##! @author	fstone.zh@foxmail.com
 ##! @date	2016-10-26
 function TimeNS2MS()
 {
@@ -284,7 +289,7 @@ function TimeNS2MS()
 ##! @param	$1 秒
 ##! @param	$2 纳秒
 ##! @output	
-##! @author	zhangshilei@zulong.com
+##! @author	fstone.zh@foxmail.com
 ##! @date	2016-10-26
 function TimeFormat()
 {
@@ -303,7 +308,7 @@ function TimeFormat()
 ##! @param	$1 日期
 ##! @param 	$2 指定格式 同date命令 +%Y-%m-%d
 ##! @output	
-##! @author	zhangshilei@zulong.com
+##! @author	fstone.zh@foxmail.com
 ##! @date	2016-11-09
 function DateFormat()
 {
@@ -359,7 +364,7 @@ function DateFormat()
 ##! @param	$3 	结束时间：秒
 ##! @param	$4 	结束时间：纳秒
 ##! @output	时间差 (时:分:秒.毫秒)
-##! @author	zhangshilei@zulong.com
+##! @author	fstone.zh@foxmail.com
 ##! @date	2016-10-26
 function TimeDiff()
 {
@@ -392,7 +397,7 @@ function TimeDiff()
 ##! @param	$3 结束：秒
 ##! @param	$4 结束：纳秒
 ##! @output	
-##! @author	zhangshilei@zulong.com
+##! @author	fstone.zh@foxmail.com
 ##! @date	2016-10-26
 function TimeElapsed()
 {
@@ -410,7 +415,7 @@ function TimeElapsed()
 ##! @param	$2 日期/版本号
 ##! @param	$3 目录（可选）
 ##! @output	
-##! @author	zhangshilei@zulong.com
+##! @author	fstone.zh@foxmail.com
 ##! @date	2016-11-10
 function FindRevision()
 {
@@ -439,7 +444,7 @@ function FindRevision()
 ##! @param	$2 指定日期
 ##! @param	$3 工作路径
 ##! @output	指定日期最后一个版本号;若为今天，则输出空
-##! @author	zhangshilei@zulong.com
+##! @author	fstone.zh@foxmail.com
 ##! @date	2016-11-09
 function DayFinalRevision()
 {
@@ -478,7 +483,7 @@ function DayFinalRevision()
 ##! @param	$1 模式串
 ##! @param 	$2 .. 字符串
 ##! @output	如果模式串pattern在字符串中存在，则输出pattern；否则输出空
-##! @author	zhangshilei@zulong.com
+##! @author	fstone.zh@foxmail.com
 ##! @date	2016-11-09
 function SubOf()
 {
