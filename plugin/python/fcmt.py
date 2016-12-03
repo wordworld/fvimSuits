@@ -95,7 +95,7 @@ class Lang:
 	class Text:
 		'普通文本'
 		# 已选的标签
-		tag_file 	= [ BRIEF, DETAIL, DETAIL, FILE, PATH, AUTHOR, DATE, VERSION ]
+		tag_file 	= [ BRIEF, DETAIL, DETAIL, FILE, AUTHOR, DATE, VERSION ]
 		tag_class 	= [ BRIEF, DETAIL, DETAIL ]
 		tag_function 	= [ BRIEF, DETAIL, DETAIL, PARAM, RETURN ]
 		# 标识符      _/字母    字母/数字
