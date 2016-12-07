@@ -28,7 +28,7 @@ vim_cfg_item=(
 'set autowrite'		# 自动保存
 'set autoindent'	# 自动缩进
 'set smartindent'	# 智能缩进
-'set cindent'		# 使用 C/C++ 的自动缩进方式
+# 'set cindent'		# 使用 C/C++ 的自动缩进方式
 'set linebreak'		# 整词换行
 'set showmatch'		# 显示 括号匹配
 'set backspace=2'	# 使能 退格键
