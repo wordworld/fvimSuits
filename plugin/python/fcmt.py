@@ -85,6 +85,7 @@ class Lang:
 	PYTHON 	= "python" 	# # 		''' 	''' 		""" 	"""
 	LUA 	= "lua" 	# -- 		--[[ 	 ]] 		--[====[ 	 ]====]
 	VIML 	= "vimL" 	# "
+	ASM	= "asm"		# ;
 	def __init__( self ):
 		pass
 
@@ -274,6 +275,23 @@ class Lang:
 			self.tEnd 	= " */" 	# 行尾注释：结束符号
 
 
+	class Asm( Text ):
+		'ASM'
+		def __init__( self ):
+			# 语言名称
+			self.name	= Lang.ASM
+			# 文件类型
+			self.syntax	= [ ".asm", ".ASM" ]
+			# 注释符号
+			self.line	= ";"
+			slef.start	= ";"
+			self.middle	= ";"
+			self.end	= ";"
+			self.decorator	= "-"
+			self.tStart	= ";"
+			self.tEnd	= ""
+
+
 	##!  @brief	Shell类
 	##!  
 	##!  
@@ -383,7 +401,7 @@ class Comment:
 	'注释'
 	# 构造函数
 	def __init__( self ):
-		self.langPool 	= [ Lang.Text(), Lang.Cplus(), Lang.Shell(), Lang.Python(), Lang.Lua(), Lang.VimL() ]
+		self.langPool 	= [ Lang.Text(), Lang.Cplus(), Lang.Shell(), Lang.Python(), Lang.Lua(), Lang.VimL(), Lang.Asm() ]
 		self.lang 	= self.langPool[ 0 ]
 
 	# 当前语法环境匹配( lang.syntax 与 当前文件匹配 )

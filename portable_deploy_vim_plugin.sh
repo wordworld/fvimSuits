@@ -78,7 +78,7 @@ done
 
 # 1.[2] 插件管理器 pathogen
 plugin_mgr=("pathogen.vim" "https://tpo.pe/pathogen.vim")
-cfg_plugin_mgr=("execute pathogen#infect()" "syntax on" "filetype plugin indent on")
+cfg_plugin_mgr=("execute pathogen#infect()" "syntax on") # "filetype plugin indent on" 可能导致.py文件中以空格代替Tab
 HighLightStep 3 config ${plugin_mgr[0]}
 $TEST FindSetLines $vimrc "${cfg_plugin_mgr[0]}" "${cfg_plugin_mgr[@]}"
 
@@ -90,7 +90,7 @@ brackets_complete=("autopairs" "auto-pairs" "git://github.com/jiangmiao/auto-pai
 
 # 4.[3] 文件目录树 NERDTree
 directory_tree=("NERDTree" "nerdtree" "git://github.com/scrooloose/nerdtree.git")
-cfg_directory_tree=( "map <C-n> :NERDTreeToggle<CR>")
+cfg_directory_tree=( "map <C-t> :NERDTreeToggle<CR>")
 GitCheck "${directory_tree[@]:0:2}"
 $TEST FindSetLines $vimrc "${cfg_directory_tree[0]}" "${cfg_directory_tree[0]}"
 
