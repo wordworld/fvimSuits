@@ -283,13 +283,13 @@ class Lang:
 			# 文件类型
 			self.syntax	= [ ".asm", ".ASM" ]
 			# 注释符号
-			self.line	= ";"
-			slef.start	= ";"
-			self.middle	= ";"
-			self.end	= ";"
-			self.decorator	= "-"
-			self.tStart	= ";"
-			self.tEnd	= ""
+			self.line	= ";"		# 单行注释符
+			self.start	= ";;"		# 多行注释 	首行 	首 注释符
+			self.middle	= ";; "		# 		中间行 	首 注释符
+			self.end	= ";;"		# 		结束行 	尾 注释符
+			self.decorator	= ";"
+			self.tStart	= ";"		# 行尾注释：起始符号
+			self.tEnd	= ""		# 行尾注释：结束符号
 
 
 	##!  @brief	Shell类
