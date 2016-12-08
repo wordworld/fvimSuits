@@ -281,7 +281,7 @@ class Lang:
 			# 语言名称
 			self.name	= Lang.ASM
 			# 文件类型
-			self.syntax	= [ ".asm", ".ASM" ]
+			self.syntax	= [ ".asm", ".ASM", ".s", ".S", ".inc" ]
 			# 注释符号
 			self.line	= ";"		# 单行注释符
 			self.start	= ";;"		# 多行注释 	首行 	首 注释符
