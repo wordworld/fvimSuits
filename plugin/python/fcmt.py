@@ -136,6 +136,7 @@ class Lang:
 			self.line 	= "§ " # 行注释
 			self.start 	= "┌"  # 块注释：起始行
 			self.middle 	= "│ " # 	 中间行
+			self.endL	= ""   #	 结束行左侧字符
 			self.end 	= "┘"  # 	 结束行
 			self.decorator 	= "─"  # 装饰符
 			self.tStart 	= "[ " # 行尾注释：起始符号
@@ -197,7 +198,7 @@ class Lang:
 				if( fvim.insertTextLine( ident + self.middle + Tag.name[key] + str( Tag.value[key] ), line, buf ) ):
 					line += 1
 			# 结束行
-			fvim.insertTextLine( ident + self.decorator * UsrDecoratorCount + self.end, line, buf )
+			fvim.insertTextLine( ident + self.endL + self.decorator * UsrDecoratorCount + self.end, line, buf )
 
 		# 注释类
 		def AnnotateClass( self, line, buf ):
@@ -210,7 +211,7 @@ class Lang:
 				if( fvim.insertTextLine( ident + self.middle + Tag.name[key] + str( Tag.value[key] ), line, buf ) ):
 					line += 1
 			# 结束行
-			fvim.insertTextLine( ident + self.end, line, buf )
+			fvim.insertTextLine( ident + self.endL + self.end, line, buf )
 
 		# 注释函数
 		def AnnotateFunction( self, line, buf ):
@@ -233,7 +234,7 @@ class Lang:
 				elif( fvim.insertTextLine( ident + self.middle + Tag.name[key] + str( Tag.value[key] ), line, buf ) ):
 					line += 1
 			# 末行
-			fvim.insertTextLine( ident + self.end, line, buf )
+			fvim.insertTextLine( ident + self.endL + self.end, line, buf )
 
 		# 注释行尾
 		def AnnotateLineTail( self, line, buf ):
@@ -277,6 +278,7 @@ class Lang:
 			self.line 	= "// " 	# 单行注释符
 			self.start 	= "/**" 	# 多行注释 	首行 	首 注释符
 			self.middle 	= " * " 	# 		中间行 	首 注释符
+			self.endL	= ""		#	 	结束行	首 注释符
 			self.end 	= "*/" 		# 		结束行 	尾 注释符
 			self.decorator 	= "*"
 			self.tStart 	= "/** " 	# 行尾注释：起始符号
@@ -294,8 +296,9 @@ class Lang:
 			self.line	= ";"		# 单行注释符
 			self.start	= ";;"		# 多行注释 	首行 	首 注释符
 			self.middle	= ";; "		# 		中间行 	首 注释符
-			self.end	= ";;"		# 		结束行 	尾 注释符
-			self.decorator	= ";"
+			self.endL	= ";;"		#	 	结束行	首 注释符
+			self.end	= ""		# 		结束行 	尾 注释符
+			self.decorator	= "*"
 			self.tStart	= ";"		# 行尾注释：起始符号
 			self.tEnd	= ""		# 行尾注释：结束符号
 
@@ -312,6 +315,7 @@ class Lang:
 			self.line 	= "# "
 			self.start 	= ""
 			self.middle 	= "##! "
+			self.endL	= ""		#	 	结束行	首 注释符
 			self.end 	= ""
 			self.decorator 	= "#"
 			self.tStart 	= "##! " 	# 行尾注释：起始符号
@@ -344,6 +348,7 @@ class Lang:
 			self.line 	= "# "
 			self.start 	= ""
 			self.middle 	= "##!  "
+			self.endL	= ""		#	 	结束行	首 注释符
 			self.end 	= ""
 			self.decorator 	= "#"
 			self.tStart 	= "##! " 	# 行尾注释：起始符号
@@ -367,6 +372,7 @@ class Lang:
 			self.line 	= "-- "
 			self.start 	= ""
 			self.middle 	= "--! "
+			self.endL	= ""		#	 	结束行	首 注释符
 			self.end 	= ""
 			self.decorator 	= "-"
 			self.tStart 	= "--! " 	# 行尾注释：起始符号
@@ -390,6 +396,7 @@ class Lang:
 			self.line 	= "\" "
 			self.start 	= ""
 			self.middle 	= "\"! "
+			self.endL	= ""		#	 	结束行	首 注释符
 			self.end 	= ""
 			self.decorator 	= "\""
 			self.tStart 	= "\"! " 	# 行尾注释：起始符号
