@@ -24,7 +24,7 @@ EOF
 
 
 " cf : 注释本行
-command! -nargs=0 CCL call DoCmtCurLine()
+" command! -nargs=0 CCL call DoCmtCurLine()
 nnoremap cf :call DoCmtCurLine()<CR>
 
 function! DoCmtCurLine()
@@ -37,7 +37,7 @@ endfunction
 
 
 " df : 取消注释本行
-command! -nargs=0 CCL call UndoCmtCurLine()
+" command! -nargs=0 UCCL call UndoCmtCurLine()
 nnoremap df :call UndoCmtCurLine()<CR>
 
 function! UndoCmtCurLine()
@@ -50,7 +50,7 @@ endfunction
 
 
 " f : 注释/取消 本行
-command! -nargs=0 CCLT call CmtCurLineToggle()
+" command! -nargs=0 CCLT call CmtCurLineToggle()
 nnoremap f :call CmtCurLineToggle()<CR>
 
 function! CmtCurLineToggle()
@@ -63,7 +63,7 @@ endfunction
 
 
 " m : 模块注释文件、函数、类
-command! -nargs=0 MCF call CmtModule()
+" command! -nargs=0 CM call CmtModule()
 nnoremap m :call CmtModule()<CR>
 
 function! CmtModule()
@@ -76,7 +76,7 @@ endfunction
 
 
 " Ctrl+L : 添加/删除 一行注释分隔符
-command! -nargs=0 CST call CmtSeparatorToggle()
+" command! -nargs=0 CST call CmtSeparatorToggle()
 nnoremap <C-L> :call CmtSeparatorToggle()<CR>
 
 function! CmtSeparatorToggle()
@@ -89,7 +89,7 @@ endfunction
 
 
 " t : 添加/删除 行尾注释符
-command! -nargs=0 CLTT call CmtLineTailToggle()
+" command! -nargs=0 CLTT call CmtLineTailToggle()
 nnoremap t :call CmtLineTailToggle()<CR>
 
 function! CmtLineTailToggle()
