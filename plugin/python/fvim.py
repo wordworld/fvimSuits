@@ -5,9 +5,9 @@
 ##!  
 ##!  功能包括行操作（删除、插入）、前缀操作（删除、添加）、光标位置、文件信息（路径、名称）等
 ##!  @file	fvim.py
-##!  @path	prj/python/module
-##!  @author	Fstone's ComMent Tool
-##!  @date	2016-09-09
+##!  @path	prj/fvimSuits/plugin/python
+##!  @author	fstone.zh@foxmail.com
+##!  @date	2016-12-12
 ##!  @version	0.1.0
 ############################################################
 import vim
@@ -297,17 +297,22 @@ def GetCurrentColumn():
 ##!  @author	Fstone's ComMent Tool
 ##!  @date	2016-09-09
 def ValidIndex( lineRange , bufIndex=0 ):
+	buf = GetBuf( bufIndex )
+	if( None == buf ):
+		print "error: invalid buffer index:", bufIndex
+		return None
+	lineCnt = len( buf )
 	if( 0 == lineRange[ 0 ] ):
 		lineRange[ 0 ] = GetCurrentRow()
 	if( 0 == lineRange[ 1 ] ):
 		lineRange[ 1 ] = lineRange[ 0 ]
-	buf = GetBuf( bufIndex )
-	if( None == buf ):
-		return None
-	lineCnt = len( buf )
-	if( lineRange[ 0 ] < 0 ):
+	if( lineCnt < lineRange[0] ):
+		lineRange[0] = lineCnt
+	if( lineCnt < lineRange[1] ):
+		lineRange[1] = lineCnt
+	while( 0 > lineRange[ 0 ] ):
 		lineRange[ 0 ] += lineCnt
-	if( lineRange[ 1 ] < 0 ):
+	while( 0 > lineRange[ 1 ] ):
 		lineRange[ 1 ] += lineCnt
 	if( lineRange[ 0 ] > lineRange[ 1 ] ):
 		lineRange[ 0 ], lineRang[ 1 ] = lineRange[ 1 ], lineRang[ 0 ] 
@@ -427,13 +432,5 @@ def atFileTop( line, buf ):
 			return False
 		line -= 1
 	return True
-
-
-
-
-
-
-
-
 
 

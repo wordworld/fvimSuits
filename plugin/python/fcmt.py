@@ -3,10 +3,10 @@
 ############################################################
 ##!  @brief	fcmt工具的主要逻辑 
 ##!    
-##!    包含类Tag Lang{ Text: Cplus Shell Python Lua VimL }。实现向以上语言的代码文件插入自动化注释（行、文件头、函数、类等）功能
+##!  包含类Tag Lang{ Text: Cplus Shell Python Lua VimL }。实现向以上语言的代码文件插入自动化注释（行、文件头、函数、类等）功能
 ##!  @file	fcmt.py
-##!  @author	Fstone's ComMent Tool
-##!  @date	2016-09-09
+##!  @author	fstone.zh@foxmail.com
+##!  @date	2016-12-12
 ##!  @version	0.1.0
 ############################################################
 
@@ -16,8 +16,9 @@ import datetime
 import re
 
 # 定制内容
-tag_author = "fstone.zh@foxmail.com" 		# 作者
-UsrDecoratorCount 	= 60 			# 注释装饰符号数量，用于产生文件头的装饰框
+tag_author 		= "fstone.zh@foxmail.com" 	# 作者
+UsrDecoratorCount 	= 60 				# 注释装饰符号数量，用于产生文件头的装饰框
+file_top		= [1,15]			# 1,11行为文件头
 
 # 标签
 BRIEF 	= "brief"		
@@ -43,6 +44,8 @@ OUTPUT 	= "output"
 ##!  键: 与定制内容一致 	# 值: 可自定义
 class Tag:
 	'标签'
+	tag	= '@'
+	least	= 3
 	name 	= { BRIEF	: "@brief\t", 		DETAIL 	: "", 
 		    PARAM	: "@param\t", 		RETURN 	: "@return\t",
 		    PATH 	: "@path\t", 		FILE 	: "@file\t",
@@ -60,6 +63,7 @@ class Tag:
 		    ATTENTION 	: "", 			BUG 	: "",
 		    INPUT 	: "", 			OUTPUT 	: "",
 		}
+	auto	= [ PATH, FILE, AUTHOR, DATE ]
 
 	def __init__( self ):
 		pass
@@ -97,7 +101,7 @@ class Lang:
 		# 已选的标签
 		tag_file 	= [ BRIEF, DETAIL, DETAIL, FILE, AUTHOR, DATE, VERSION ]
 		tag_class 	= [ BRIEF, DETAIL, DETAIL ]
-		tag_function 	= [ BRIEF, DETAIL, DETAIL, PARAM, RETURN ]
+		tag_function 	= [ BRIEF, DETAIL, DETAIL, PARAM, RETURN, DATE ]
 		# 标识符      _/字母    字母/数字
 		reId 	= r"(?: [a-zA-Z_] [a-zA-Z_0-9]* )"
 		# 命名空间                top           ::       [          sub           ::   ]
@@ -148,6 +152,10 @@ class Lang:
 		# 光标位于 类名所在行 或 上一行
 		def atClass( self, line, buf ):
 			return self.objClass.match( buf[ line-1 ] )
+
+		# 光标位于 文件头(由file_top定制)
+		def atFileTop( self, line, buf ):
+			return line in range(file_top[0], file_top[1])
 
 		##!  @brief	获取参数列表
 		##!  
@@ -419,8 +427,7 @@ class Comment:
 	# 是否 有效的命令
 	def ValidCommand( self, lineRange, bufIndex ):
 		if( self.MatchSyntax( bufIndex ) ):
-			buf = fvim.ValidIndex( lineRange, bufIndex )
-			return buf
+			return fvim.ValidIndex( lineRange, bufIndex )
 		return None
 
 	# 注释
@@ -481,29 +488,74 @@ class Comment:
 		# 循环 注释/取消 每一行 
 		line = lineRange[ 0 ]
 		while( line <= lineRange[ 1 ] ):
-			if( fvim.compatibleDeletePrefix( self.lang.line, line, buf ) ): 	# 取消
+			# 取消已经注释行
+			if( fvim.compatibleDeletePrefix( self.lang.line, line, buf ) ):
 				uncommentedLine += 1
-			else: 							# 注释
+			# 添加注释
+			else: 							
 				fvim.insertText( self.lang.line, zsl.LeftWhiteSpaceLen( buf[ line-1  ] ), line, buf )
 				commentedLine += 1
 			line += 1
 		return commentedLine + uncommentedLine
 	
+	##!  @brief	以symbols中的某个开头
+	##!  
+	##!  
+	##!  @param	self
+	##!  @param	str	字符串
+	##!  @param	symbols	可能开头的串
+	##!  @return	无
+	##!  @date	2016-12-12
+	def StartWithSomeOf(self, str, symbols):
+		for smb in symbols:
+			if( str.lstrip().startswith(smb.lstrip()) ):
+				return True
+		return False
+
+	##!  @brief	是否已经有注释
+	##!  
+	##!  从line行向前搜索至注释结束
+	##!  @param	self
+	##!  @param	lineRange 连续注释行范围
+	##!  @param	buf
+	##!  @return	无
+	##!  @date	2016-12-12
+	def Commented(self, lineRange, buf):
+		cmtSymbols = [self.lang.line, self.lang.middle, self.lang.decorator, self.lang.tStart ]
+		line = ( lineRange[0] + lineRange[1] ) / 2
+		isCmt = False
+		if( self.StartWithSomeOf( buf[ line-1 ], cmtSymbols) ):
+			lineRange[0] = lineRange[1] = line
+			line = lineRange[0] - 1
+			while( 0 < line and self.StartWithSomeOf( buf[ line-1 ], cmtSymbols ) ):
+				lineRange[0] = line
+				line -= 1
+			lineCnt = len( buf )
+			line = lineRange[1] + 1
+			while( lineCnt >= lineRange[1] and self.StartWithSomeOf( buf[ line-1 ], cmtSymbols ) ):
+				lineRange[1] = line
+				line += 1
+			return True
+		return False
+
 	##!  @brief	添加/删除 自动注释 函数 类 文件头
 	##!    
-	##!    TODO 注释已存在时自动同步模块更新
+	##!  注释已存在时更新自动标签
 	##!  @param	self
 	##!  @param	line 		光标所在行
 	##!  @param	bufIndex 	打开的文件
 	##!  @return	是否生成注释
-	##!  @author	Fstone's ComMent Tool
-	##!  @date	2016-09-09
+	##!  @author	fstone.zh@foxmail.com
+	##!  @date	2016-12-12
 	def Module( self, line = 0, bufIndex = 0 ):
 		lineRange = [ line, line ]
 		buf = self.ValidCommand( lineRange, bufIndex )
 		if( None == buf ):
 			return False
 		line = lineRange[0]
+		# 如果已经有注释，更新自动注释标签
+		if( self.Commented( lineRange, buf ) ):
+			return self.UpdateAutoTags(lineRange[0], lineRange[1], bufIndex)
 		#   ……     函数名所在行 或 上一行
 		if( self.lang.atFunction( line, buf ) ):
 			return self.lang.AnnotateFunction( line, buf )
@@ -511,9 +563,11 @@ class Comment:
 		if( self.lang.atClass( line, buf ) ):
 			return self.lang.AnnotateClass( line, buf )
 		#  文件前10行
-		if( fvim.atFileTop( line, buf) ): 	
+		if( self.lang.atFileTop( line, buf) ): 	
 			return self.lang.AnnotateFile( line, buf )
 		return False
+
+		
 
 	##!  @brief	插入分隔线
 	##!  
@@ -540,10 +594,45 @@ class Comment:
 	##!  @param	bufIndex 文件buffer索引
 	##!  @return	无
 	##!  @author	Fstone's ComMent Tool
-	##!  @date	2016-09-12
+	##!  @date	2016-09-09
 	def LineTailToggle( self, line = 0, bufIndex = 0 ):
 		lineRange = [ line, line ]
 		buf = self.ValidCommand( lineRange, bufIndex )
 		if( None == buf ):
 			return False
 		return self.lang.AnnotateLineTail( lineRange[ 0 ], buf )
+	
+	##!  @brief	更新标签值
+	##!  
+	##!  
+	##!  @param	self
+	##!  @param	lineStart	起始行号
+	##!  @param	lineEnd		结束行号
+	##!  @param	bufIndex	文件buffer索引
+	##!  @return	无
+	##!  @date	2016-12-12
+	def UpdateAutoTags( self, lineStart = 0, lineEnd = 0, bufIndex = 0 ):
+		lineRange = [ lineStart, lineEnd ]
+		buf = self.ValidCommand( lineRange, bufIndex )
+		if( None == buf ):
+			return False
+		if( self.Commented( lineRange, buf ) ):
+			Tag.Update( buf )
+			lineNum = lineRange[0]
+			while( lineNum <= lineRange[1] ):
+				strLine = buf[ lineNum - 1 ]
+				for auto_tag in Tag.auto:
+					idx = strLine.find(Tag.name[ auto_tag ])
+					if( -1 != idx ):
+						fvim.setLineText( strLine[0:idx] + Tag.name[ auto_tag ] + str(Tag.value[ auto_tag ]), lineNum, buf )
+				lineNum += 1
+
+	##!  @brief	自动更新
+	##!  
+	##!  
+	##!  @param	self
+	##!  @return	无
+	##!  @date	2016-12-12
+	def AutoUpdate( self ):
+		self.UpdateAutoTags( file_top[0], file_top[1] )
+		

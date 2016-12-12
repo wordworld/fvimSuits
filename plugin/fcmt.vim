@@ -3,9 +3,9 @@
 ""! 
 ""! 
 ""! @file	fcmt.vim
-""! @path	prj/vim/fcmt/plugin
-""! @author	Fstone's ComMent Tool
-""! @date	2016-09-09
+""! @path	prj/fvimSuits/plugin
+""! @author	fstone.zh@foxmail.com
+""! @date	2016-12-12
 ""! @version	0.1.0
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 保证只加载一次
@@ -88,8 +88,6 @@ EOF
 endfunction
 
 
-
-
 " t : 添加/删除 行尾注释符
 command! -nargs=0 CLTT call CmtLineTailToggle()
 nnoremap t :call CmtLineTailToggle()<CR>
@@ -101,3 +99,15 @@ cmt = fcmt.Comment()
 cmt.LineTailToggle()
 EOF
 endfunction
+
+" 保存时自动更新 
+function! CmtAutoUpdate()
+pytho<<EOF
+import fcmt
+cmt = fcmt.Comment()
+cmt.AutoUpdate()
+EOF
+endfunction
+
+autocmd BufWritePre * call CmtAutoUpdate()
+" autocmd BufNewFile * call 
