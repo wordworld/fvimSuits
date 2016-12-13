@@ -7,7 +7,7 @@
 ##!  @file	fvim.py
 ##!  @path	prj/fvimSuits/plugin/python
 ##!  @author	fstone.zh@foxmail.com
-##!  @date	2016-12-12
+##!  @date	2016-12-13
 ##!  @version	0.1.0
 ############################################################
 import vim
@@ -46,7 +46,81 @@ def insertTextLine( text, line, buf ):
 	return False
 
 
-
+##!  @brief	表格绘制类
+##!  
+##!  
+class Table:
+	'Table'
+	def __init__( self ):
+		self.LU = '┌'
+		self.MU = '┬'
+		self.RU = '┐'
+		self.LM = '├'
+		self.MM = '┼'
+		self.RM = '┤'
+		self.LD = '└'
+		self.MD = '┴'
+		self.RD = '┘'
+		self.H	= '─'
+		self.V	= '│'
+		self.S	= ' '
+	##!  @brief	绘制表
+	##!  
+	##!  
+	##!  @param	self
+	##!  @param	row	行数
+	##!  @param	col	列数
+	##!  @param	width	列宽
+	##!  @param	height	行高
+	##!  @param	line	插入到第几行
+	##!  @param	bufIdx
+	##!  @return	无
+	##!  @date	2016-12-13
+	def Draw( self, row, col, width, height, line = 0, bufIdx = 0 ):
+		if( 1 > row or 1 > col ):
+			return False
+		lineRange = [ line, line ]
+		buf = ValidIndex(lineRange, bufIdx)
+		if( None == buf ):
+			return False
+		line = lineRange[0]
+		up	= self.LU + self.H * width	# 顶行
+		mid	= self.LM + self.H * width	# 中行
+		down	= self.LD + self.H * width	# 底行
+		# 第 [2,n-1] 列
+		if(1 < col):
+			up	+= ( self.MU + self.H * width ) * (col-1)
+			mid	+= ( self.MM + self.H * width ) * (col-1)
+			down	+= ( self.MD + self.H * width ) * (col-1)
+		# 第 n 列
+		up	+= self.RU
+		mid	+= self.RM
+		down	+= self.RD
+		# 内容行
+		text	= self.V  + ( self.S * width + self.V ) * col
+		# 绘制表头行
+		insertTextLine( up,	line,	buf )
+		line += 1
+		# 绘制第一行内容
+		k = 0
+		while( k < height ):
+			insertTextLine( text,	line,	buf )
+			line += 1
+			k += 1
+		# 绘制若干间隔行和内容行
+		if( 1 < row ):
+			i = 0
+			while(i < row-1):
+				insertTextLine( mid,	line,	buf )
+				line += 1
+				k = 0
+				while( k < height ):
+					insertTextLine( text,	line,	buf )
+					line += 1
+					k += 1
+				i += 1
+		# 绘制末行
+		insertTextLine( down, line, buf )
 
 
 # ######################## 删 ####################################

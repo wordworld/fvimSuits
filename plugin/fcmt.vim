@@ -1,11 +1,11 @@
-" """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 ""! @brief	fcmt 插件 for Vim
 ""! 
 ""! 
 ""! @file	fcmt.vim
 ""! @path	prj/fvimSuits/plugin
 ""! @author	fstone.zh@foxmail.com
-""! @date	2016-12-12
+""! @date	2016-12-13
 ""! @version	0.1.0
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 保证只加载一次
@@ -111,3 +111,46 @@ endfunction
 
 autocmd BufWritePre * call CmtAutoUpdate()
 " autocmd BufNewFile * call 
+
+
+"! @brief	绘制表格 
+"! 
+"! 
+"! @param	...	row, col, width=4, height=1	
+"! @return	无
+"! @date	2016-12-13
+function! DrawTable(...)
+python<<EOF
+import fvim
+cnt = int(vim.eval("a:0"))
+if(4 < cnt):
+	cnt = 4
+# 默认2行8列，列宽4,行高1
+rcwh=[2, 8, 4, 1]
+idx = 1
+while( idx <= cnt ):
+	rcwh[idx-1] = int(vim.eval("a:"+str(idx)))
+	idx+=1
+table = fvim.Table()
+table.Draw(rcwh[0], rcwh[1], rcwh[2], rcwh[3])
+EOF
+endfunction
+
+
+"! @brief	绘制目录
+"! 
+"! 
+"! @param	... dir, level
+"! @return	无
+"! @date	2016-12-13
+function! DrawDir(...)
+python<<EOF
+cnt = int(vim.eval("a:0"))
+dir = "./"	# 默认绘制当前目录
+level = 0	# 默认迭代绘制 (level指定绘制几层目录深度)
+if( 1 <= cnt ):
+	dir = str( vim.eval("a:1") )
+if( 2 <= cnt ):
+	level = int( vim.eval("a:2") )
+EOF
+endfunction
