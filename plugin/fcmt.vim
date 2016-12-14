@@ -145,14 +145,18 @@ endfunction
 "! @date	2016-12-13
 function! DrawDir(...)
 python<<EOF
+import fcmt
+# 默认绘制当前目录, 递归绘制,无前缀
+args=[ "./", 0, None ]
 cnt = int(vim.eval("a:0"))
-dir = "./"	# 默认绘制当前目录
-level = 0	# 默认迭代绘制 (level指定绘制几层目录深度)
-if( 1 <= cnt ):
-	dir = str( vim.eval("a:1") )
-if( 2 <= cnt ):
-	level = int( vim.eval("a:2") )
-print dir, level
+if(cnt > len(args)):
+	cnt = len(args)
+idx=1
+while(idx<=cnt):
+	args[idx-1] = vim.eval("a:"+str(idx))
+	idx+=1
+cmt = fcmt.Comment()
+cmt.DrawDir(args[0], args[1], args[2])
 EOF
 endfunction
 :com -nargs=* -complete=file Dir call DrawDir(<f-args>)

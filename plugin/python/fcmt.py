@@ -630,8 +630,9 @@ class Comment:
 				strLine = buf[ lineNum - 1 ]
 				for auto_tag in Tag.auto:
 					idx = strLine.find(Tag.name[ auto_tag ])
-					if( -1 != idx ):
-						fvim.setLineText( strLine[0:idx] + Tag.name[ auto_tag ] + str(Tag.value[ auto_tag ]), lineNum, buf )
+					newText = Tag.name[ auto_tag ] + str( Tag.value[ auto_tag ] )
+					if( -1 != idx and strLine[idx:] != newText):
+						fvim.setLineText( strLine[0:idx] + newText, lineNum, buf )
 				lineNum += 1
 
 	##!  @brief	自动更新
@@ -662,9 +663,33 @@ class Comment:
 		col = int(col)
 		width = int(width)
 		height = int(height)
+		line = int(line)
+		bufIdx = int(bufIdx)
 		if( None == prefix ):
 			if( self.MatchSyntax( bufIdx ) ):
 				prefix = self.lang.line
 			else:
 				prefix = ""
 		return fvim.Table().Draw( row, col, width, height, prefix, line, bufIdx )
+	
+	##!  @brief	绘制路径下文件夹及文件
+	##!  
+	##!  
+	##!  @param	self
+	##!  @param	dir	路径
+	##!  @param	maxLevel显示层次, 缺省level=0表示递归
+	##!  @param	prefix	前缀,缺省None添加文件相对应语言注释符
+	##!  @param	line
+	##!  @param	bufIdx
+	##!  @return	无
+	##!  @date	2016-12-14
+	def DrawDir( self, dir, maxLevel=0, prefix=None, line=0, bufIdx=0 ):
+		maxLevel = int(maxLevel)
+		line = int(line)
+		bufIdx = int(bufIdx)
+		if( None == prefix ):
+			if( self.MatchSyntax( bufIdx ) ):
+				prefix = self.lang.line
+			else:
+				prefix = ""
+		return fvim.Directory().Draw(dir, maxLevel, prefix, line, bufIdx)

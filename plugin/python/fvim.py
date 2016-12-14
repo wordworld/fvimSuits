@@ -12,6 +12,7 @@
 ############################################################
 import vim
 import zsl
+import os
 
 
 # ####################### 增 #####################################
@@ -121,6 +122,66 @@ class Table:
 				i += 1
 		# 绘制末行
 		insertTextLine( down, line, buf )
+
+class Directory:
+	'目录'
+	def __init__( self ):
+		self.forUncle	= '│   '
+		self.forBro	= '├── '
+		self.last	= '└── '
+	##!  @brief	绘制目录树状结构
+	##!  
+	##!  
+	##!  @param	self
+	##!  @param	dir	目录
+	##!  @param	maxLevel最深层次，默认0递归
+	##!  @param	prefix	前缀
+	##!  @param	line
+	##!  @param	bufIdx
+	##!  @return	无
+	##!  @date	2016-12-14
+	def Draw(self, dir, maxLevel = 0, prefix = "", line=0, bufIdx=0):
+		dirUncle = ""
+		fileUncle = ""
+		lineRange = [ line, line ]
+		buf = ValidIndex(lineRange, bufIdx)
+		if( None == buf ):
+			return False
+		line = lineRange[0]
+		# 根目录
+		text = prefix + dir
+		insertTextLine( text,	line,	buf )
+		line += 1
+		if(dir[-1] != "/"):
+			dir += "/"
+		bRootDir = True
+		# 迭代打印目录
+		for root, dirs, files in os.walk(dir):
+			# 目录层次，从0开始
+			level = root.replace(dir, '').count(os.sep)
+			if(0 >= maxLevel or maxLevel > level):
+				dirUncle = self.forUncle * level
+				curDir = os.path.split(root)[1]		# 目录
+
+				if( not bRootDir ):
+					text = prefix + dirUncle + self.forBro + curDir
+					insertTextLine( text,	line,	buf )
+					line += 1
+					level+= 1
+				else:
+					bRootDir = False
+
+				if(0 >= maxLevel or maxLevel > level):	# 文件
+					fileUncle = self.forUncle * (level)
+					for f in files[1:]:
+						text = prefix + fileUncle + self.forBro + f
+						insertTextLine( text,	line,	buf )
+						line += 1
+					if( len(files) > 0 ):
+						text = prefix + fileUncle + self.last + files[0]
+						insertTextLine( text,	line,	buf )
+						line += 1
+
 
 
 # ######################## 删 ####################################
