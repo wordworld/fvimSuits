@@ -5,7 +5,7 @@
 ""! @file	fcmt.vim
 ""! @path	prj/fvimSuits/plugin
 ""! @author	fstone.zh@foxmail.com
-""! @date	2016-12-13
+""! @date	2016-12-14
 ""! @version	0.1.0
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 保证只加载一次
@@ -121,7 +121,7 @@ autocmd BufWritePre * call CmtAutoUpdate()
 "! @date	2016-12-13
 function! DrawTable(...)
 python<<EOF
-import fvim
+import fcmt
 cnt = int(vim.eval("a:0"))
 if(4 < cnt):
 	cnt = 4
@@ -131,10 +131,11 @@ idx = 1
 while( idx <= cnt ):
 	rcwh[idx-1] = int(vim.eval("a:"+str(idx)))
 	idx+=1
-table = fvim.Table()
-table.Draw(rcwh[0], rcwh[1], rcwh[2], rcwh[3])
+cmt = fcmt.Comment()
+cmt.DrawTable(rcwh[0], rcwh[1], rcwh[2], rcwh[3])
 EOF
 endfunction
+:com -nargs=* Tbl call DrawTable(<f-args>)
 
 
 "! @brief	绘制目录
@@ -152,5 +153,7 @@ if( 1 <= cnt ):
 	dir = str( vim.eval("a:1") )
 if( 2 <= cnt ):
 	level = int( vim.eval("a:2") )
+print dir, level
 EOF
 endfunction
+:com -nargs=* -complete=file Dir call DrawDir(<f-args>)

@@ -6,7 +6,7 @@
 ##!  包含类Tag Lang{ Text: Cplus Shell Python Lua VimL }。实现向以上语言的代码文件插入自动化注释（行、文件头、函数、类等）功能
 ##!  @file	fcmt.py
 ##!  @author	fstone.zh@foxmail.com
-##!  @date	2016-12-12
+##!  @date	2016-12-14
 ##!  @version	0.1.0
 ############################################################
 
@@ -643,3 +643,23 @@ class Comment:
 	def AutoUpdate( self ):
 		self.UpdateAutoTags( file_top[0], file_top[1] )
 		
+
+	##!  @brief	制表
+	##!  
+	##!  
+	##!  @param	self
+	##!  @param	row	行数
+	##!  @param	col	列数
+	##!  @param	width	列宽
+	##!  @param	height	行高
+	##!  @ param	prefix	每行前缀,缺省为None（根据文件后缀名设置对应注释符号）
+	##!  @param	line	插入行
+	##!  @param	bufIdx
+	##!  @return	无
+	##!  @date	2016-12-14
+	def DrawTable( self, row, col, width, height, prefix=None, line=0, bufIdx=0 ):
+		if( None == prefix and self.MatchSyntax( bufIdx ) ):
+			prefix = self.lang.line
+		else:
+			prefix = ""
+		return fvim.Table().Draw( row, col, width, height, prefix, line, bufIdx )

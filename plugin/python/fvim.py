@@ -7,7 +7,7 @@
 ##!  @file	fvim.py
 ##!  @path	prj/fvimSuits/plugin/python
 ##!  @author	fstone.zh@foxmail.com
-##!  @date	2016-12-13
+##!  @date	2016-12-14
 ##!  @version	0.1.0
 ############################################################
 import vim
@@ -76,7 +76,7 @@ class Table:
 	##!  @param	bufIdx
 	##!  @return	无
 	##!  @date	2016-12-13
-	def Draw( self, row, col, width, height, line = 0, bufIdx = 0 ):
+	def Draw( self, row, col, width, height, prefix="", line = 0, bufIdx = 0 ):
 		if( 1 > row or 1 > col ):
 			return False
 		lineRange = [ line, line ]
@@ -84,9 +84,9 @@ class Table:
 		if( None == buf ):
 			return False
 		line = lineRange[0]
-		up	= self.LU + self.H * width	# 顶行
-		mid	= self.LM + self.H * width	# 中行
-		down	= self.LD + self.H * width	# 底行
+		up	= prefix + self.LU + self.H * width	# 顶行
+		mid	= prefix + self.LM + self.H * width	# 中行
+		down	= prefix + self.LD + self.H * width	# 底行
 		# 第 [2,n-1] 列
 		if(1 < col):
 			up	+= ( self.MU + self.H * width ) * (col-1)
@@ -97,7 +97,7 @@ class Table:
 		mid	+= self.RM
 		down	+= self.RD
 		# 内容行
-		text	= self.V  + ( self.S * width + self.V ) * col
+		text	= prefix + self.V  + ( self.S * width + self.V ) * col
 		# 绘制表头行
 		insertTextLine( up,	line,	buf )
 		line += 1
