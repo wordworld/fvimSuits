@@ -140,7 +140,7 @@ class Directory:
 	##!  @param	bufIdx
 	##!  @return	无
 	##!  @date	2016-12-14
-	def Draw(self, dir, maxLevel = 0, prefix = "", line=0, bufIdx=0):
+	def Draw(self, dir, maxLevel = 0, prefix = "", show_all=0, line=0, bufIdx=0):
 		dirUncle = ""
 		fileUncle = ""
 		lineRange = [ line, line ]
@@ -159,17 +159,14 @@ class Directory:
 		for root, dirs, files in os.walk(dir):
 			# 目录层次，从0开始
 			level = root.replace(dir, '').count(os.sep)
-			if(0 >= maxLevel or maxLevel > level):
+			curDir = os.path.split(root)[1]		# 目录
+			if( (0 >= maxLevel or maxLevel > level) and (show_all !=0 or not '.' in root[1:]) ):
 				dirUncle = self.forUncle * level
-				curDir = os.path.split(root)[1]		# 目录
-
 				if( not bRootDir ):
 					text = prefix + dirUncle + self.forBro + curDir
 					insertTextLine( text,	line,	buf )
 					line += 1
 					level+= 1
-				else:
-					bRootDir = False
 
 				if(0 >= maxLevel or maxLevel > level):	# 文件
 					fileUncle = self.forUncle * (level)
@@ -181,6 +178,8 @@ class Directory:
 						text = prefix + fileUncle + self.last + files[0]
 						insertTextLine( text,	line,	buf )
 						line += 1
+			if(bRootDir):
+				bRootDir = False
 
 
 

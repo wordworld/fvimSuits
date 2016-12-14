@@ -146,8 +146,8 @@ endfunction
 function! DrawDir(...)
 python<<EOF
 import fcmt
-# 默认绘制当前目录, 递归绘制,无前缀
-args=[ "./", 0, None ]
+# 默认绘制当前目录, 递归绘制, 无前缀, 不显示全部
+args=[ "./", 0, None, 0 ]
 cnt = int(vim.eval("a:0"))
 if(cnt > len(args)):
 	cnt = len(args)
@@ -156,7 +156,7 @@ while(idx<=cnt):
 	args[idx-1] = vim.eval("a:"+str(idx))
 	idx+=1
 cmt = fcmt.Comment()
-cmt.DrawDir(args[0], args[1], args[2])
+cmt.DrawDir(args[0], args[1], args[2], args[3])
 EOF
 endfunction
 :com -nargs=* -complete=file Dir call DrawDir(<f-args>)
