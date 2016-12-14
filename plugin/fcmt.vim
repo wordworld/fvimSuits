@@ -122,17 +122,16 @@ autocmd BufWritePre * call CmtAutoUpdate()
 function! DrawTable(...)
 python<<EOF
 import fcmt
+rcwh=[2, 8, 4, 1, None] # 默认2行8列，列宽4,行高1, 前缀 None
 cnt = int(vim.eval("a:0"))
-if(4 < cnt):
-	cnt = 4
-# 默认2行8列，列宽4,行高1
-rcwh=[2, 8, 4, 1]
+if(len(rcwh) < cnt):
+	cnt = len(rcwh)
 idx = 1
 while( idx <= cnt ):
-	rcwh[idx-1] = int(vim.eval("a:"+str(idx)))
+	rcwh[idx-1] = vim.eval("a:"+str(idx))
 	idx+=1
 cmt = fcmt.Comment()
-cmt.DrawTable(rcwh[0], rcwh[1], rcwh[2], rcwh[3])
+cmt.DrawTable(rcwh[0], rcwh[1], rcwh[2], rcwh[3], rcwh[4])
 EOF
 endfunction
 :com -nargs=* Tbl call DrawTable(<f-args>)

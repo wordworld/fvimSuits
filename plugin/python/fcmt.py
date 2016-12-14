@@ -658,8 +658,13 @@ class Comment:
 	##!  @return	无
 	##!  @date	2016-12-14
 	def DrawTable( self, row, col, width, height, prefix=None, line=0, bufIdx=0 ):
-		if( None == prefix and self.MatchSyntax( bufIdx ) ):
-			prefix = self.lang.line
-		else:
-			prefix = ""
+		row = int(row)
+		col = int(col)
+		width = int(width)
+		height = int(height)
+		if( None == prefix ):
+			if( self.MatchSyntax( bufIdx ) ):
+				prefix = self.lang.line
+			else:
+				prefix = ""
 		return fvim.Table().Draw( row, col, width, height, prefix, line, bufIdx )
