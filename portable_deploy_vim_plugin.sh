@@ -4,9 +4,9 @@
 ##! 
 ##! 
 ##! @file	portable_deploy_vim_plugin.sh
-##! @path	fvimSuits
+##! @path	prj/fvimSuits
 ##! @author	fstone.zh@foxmail.com
-##! @date	2016-11-28
+##! @date	2016-12-16
 ##! @version	0.1.0
 ############################################################
 if [ -f "zsl.sh" ];then	bash zsl.sh setup_finclude_cmd;fi
@@ -116,7 +116,7 @@ GitCheck "${clipboard[@]:0:2}"
 $TEST FindSetLines $vimrc "${cfg_clipboard[0]}" "${cfg_clipboard[@]}"
 
 # 8. gdb调试
-gdb_runner=("conque-gdb" "conque-gdb" "git://github.com/vim-scripts/Conque-GDB.git")
+# gdb_runner=("conque-gdb" "conque-gdb" "git://github.com/vim-scripts/Conque-GDB.git")
 
 # 9. c语言
 code_c=("c.vim" "c" "https://github.com/vim-scripts/c.vim")

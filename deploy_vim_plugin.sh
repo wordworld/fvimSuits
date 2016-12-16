@@ -4,9 +4,9 @@
 ##! 
 ##! 
 ##! @file	deploy_vim_plugin.sh
-##! @path	fvimSuits
+##! @path	prj/fvimSuits
 ##! @author	fstone.zh@foxmail.com
-##! @date	2016-11-24
+##! @date	2016-12-16
 ##! @version	0.1.2
 ############################################################
 if [ -f "zsl.sh" ];then	bash zsl.sh setup_finclude_cmd;fi
@@ -42,7 +42,7 @@ GitCheck "${taglist[@]}"
 GitCheck "${clipboard[@]}"
 
 # 8. gdb调试
-GitCheck "${gdb_runner[@]}"
+# GitCheck "${gdb_runner[@]}"
 
 # 9. c语言
 GitCheck "${code_c[@]}"
