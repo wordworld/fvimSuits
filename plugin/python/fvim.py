@@ -184,7 +184,12 @@ class Directory:
 							text = prefix + fileUncle + self.last + files[0]
 							insertTextLine( text,	line,	buf )
 							line += 1
-		self.EraseFakeUncle(startLine, line-1, buf)
+		self.EraseFakeUncle(startLine, line-1, buf, True)
+		end = line - 2
+		while(end > startLine):
+			self.EraseFakeUncle(startLine, end, buf, False)
+			end -= 1
+
 
 	def EraseFakeUncle(self, startLine, endLine, buf, firstCall=True):
 		if( startLine >= endLine ):
@@ -202,7 +207,7 @@ class Directory:
 		text = self.FindReplaceWith(text, '├', self.last, self.forBro, lastLine)
 
 		buf[ endLine-2 ] = text
-		self.EraseFakeUncle( startLine, endLine-1, buf, False)
+		# self.EraseFakeUncle( startLine, endLine-1, buf, False)
 
 	##!  @brief	查找 pattern, 并将 pattern 处的 old 替换为 new 
 	##!  
