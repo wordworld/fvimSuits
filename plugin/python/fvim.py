@@ -127,8 +127,11 @@ class Directory:
 	'目录'
 	def __init__( self ):
 		self.forUncle	= '│   '
+		self.uncle 	= '│'
 		self.forBro	= '├── '
+		self.bro	= '├'
 		self.last	= '└── '
+		self.tail	= '└'
 		self.empty	= '    '
 	##!  @brief	绘制目录树状结构
 	##!  
@@ -198,13 +201,13 @@ class Directory:
 		limit = len(lastLine)
 		if(firstCall):
 			lastLine = lastLine.replace( self.forUncle, self.empty )
-			buf[endLine-1] = self.FindReplaceWith(lastLine, '├', self.last, self.forBro, "")
+			buf[endLine-1] = self.FindReplaceWith(lastLine, self.bro, self.last, self.forBro, "")
 		
 		text = buf[endLine-2]
 		# 删除已经没有子目录/文件时的 │ 连接符
-		text = self.FindReplaceWith(text, '│', self.empty, self.forUncle, lastLine)
+		text = self.FindReplaceWith(text, self.uncle, self.empty, self.forUncle, lastLine)
 		# 将最后一个目录/文件的 ├ 替换为 └
-		text = self.FindReplaceWith(text, '├', self.last, self.forBro, lastLine)
+		text = self.FindReplaceWith(text, self.bro, self.last, self.forBro, lastLine)
 
 		buf[ endLine-2 ] = text
 		# self.EraseFakeUncle( startLine, endLine-1, buf, False)
@@ -227,7 +230,7 @@ class Directory:
 			idx = text.find(pattern, idx+1)
 			if( 0 > idx ):
 				break
-			if( idx > limit or ( idx != followLine.find('│', idx) and idx != followLine.find('└', idx) and idx != followLine.find('├', idx) ) ):
+			if( idx > limit or ( idx != followLine.find(self.uncle, idx) and idx != followLine.find(self.tail, idx) and idx != followLine.find(self.bro, idx) ) ):
 				pretext = ""
 				if( 0 < idx ):
 					pretext = text[0:idx]
