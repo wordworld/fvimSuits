@@ -7,7 +7,7 @@
 ##!  @file	fvim.py
 ##!  @path	prj/fvimSuits/plugin/python
 ##!  @author	fstone.zh@foxmail.com
-##!  @date	2016-12-14
+##!  @date	2016-12-16
 ##!  @version	0.1.0
 ############################################################
 import vim
@@ -129,6 +129,7 @@ class Directory:
 		self.forUncle	= '│   '
 		self.forBro	= '├── '
 		self.last	= '└── '
+		self.empty	= '    '
 	##!  @brief	绘制目录树状结构
 	##!  
 	##!  
@@ -149,11 +150,13 @@ class Directory:
 			return False
 		line = lineRange[0]
 		# 根目录
+		startLine = line
 		text = prefix + dir
 		insertTextLine( text,	line,	buf )
 		line += 1
 		if(dir[-1] != "/"):
 			dir += "/"
+		# dir = os.path.abspath(dir)
 		bRootDir = True
 		# 迭代打印目录
 		for root, dirs, files in os.walk(dir):
@@ -180,6 +183,52 @@ class Directory:
 						line += 1
 			if(bRootDir):
 				bRootDir = False
+		self.EraseFakeUncle(startLine, line-1, buf)
+
+	def EraseFakeUncle(self, startLine, endLine, buf, firstCall=True):
+		if( startLine >= endLine ):
+			return True
+		lastLine = buf[ endLine-1 ]
+		limit = len(lastLine)
+		if(firstCall):
+			lastLine = lastLine.replace( self.forUncle, self.empty )
+			buf[endLine-1] = self.FindReplaceWith(lastLine, '├', self.last, self.forBro, "")
+		
+		text = buf[endLine-2]
+		# 删除已经没有子目录/文件时的 │ 连接符
+		text = self.FindReplaceWith(text, '│', self.empty, self.forUncle, lastLine)
+		# 将最后一个目录/文件的 ├ 替换为 └
+		text = self.FindReplaceWith(text, '├', self.last, self.forBro, lastLine)
+
+		buf[ endLine-2 ] = text
+		self.EraseFakeUncle( startLine, endLine-1, buf, False)
+	##!  @brief	查找 pattern, 并将 pattern 处的 old 替换为 new 
+	##!  
+	##!  
+	##!  @param	self
+	##!  @param	text		字符串
+	##!  @param	pattern		模式串
+	##!  @param	new		新内容
+	##!  @param	old		旧内容
+	##!  @param	followLine	下一行内容
+	##!  @return	无
+	##!  @date	2016-12-16
+	def FindReplaceWith(self, text, pattern, new, old, followLine):
+		idx = -1
+		limit = len(followLine)
+		while( True ):
+			idx = text.find(pattern, idx+1)
+			if( 0 > idx ):
+				break
+			if( idx > limit or ( idx != followLine.find('│', idx) and idx != followLine.find('└', idx) and idx != followLine.find('├', idx) ) ):
+				pretext = ""
+				if( 0 < idx ):
+					pretext = text[0:idx]
+				text = pretext + text[idx:].replace(old, new, 1)
+		return text
+		
+
+
 
 
 
