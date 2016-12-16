@@ -174,13 +174,14 @@ class Directory:
 				if(0 >= maxLevel or maxLevel > level):	# 文件
 					fileUncle = self.forUncle * (level)
 					for f in files[1:]:
-						text = prefix + fileUncle + self.forBro + f
-						insertTextLine( text,	line,	buf )
-						line += 1
-					if( len(files) > 0 ):
-						text = prefix + fileUncle + self.last + files[0]
-						insertTextLine( text,	line,	buf )
-						line += 1
+						if( show_all != 0 or '.' != f[0] ):
+							text = prefix + fileUncle + self.forBro + f
+							insertTextLine( text,	line,	buf )
+							line += 1
+					if( len(files) > 0 and ( show_all != 0 or '.' != f[0] ) ):
+							text = prefix + fileUncle + self.last + files[0]
+							insertTextLine( text,	line,	buf )
+							line += 1
 			if(bRootDir):
 				bRootDir = False
 		self.EraseFakeUncle(startLine, line-1, buf)
@@ -202,6 +203,7 @@ class Directory:
 
 		buf[ endLine-2 ] = text
 		self.EraseFakeUncle( startLine, endLine-1, buf, False)
+
 	##!  @brief	查找 pattern, 并将 pattern 处的 old 替换为 new 
 	##!  
 	##!  
