@@ -154,36 +154,36 @@ class Directory:
 		text = prefix + dir
 		insertTextLine( text,	line,	buf )
 		line += 1
-		if(dir[-1] != "/"):
-			dir += "/"
-		# dir = os.path.abspath(dir)
+		dir = os.path.abspath(dir)
 		bRootDir = True
 		# 迭代打印目录
 		for root, dirs, files in os.walk(dir):
 			# 目录层次，从0开始
 			level = root.replace(dir, '').count(os.sep)
-			curDir = os.path.split(root)[1]		# 目录
+			curDir = os.path.split(root)[1]	
+			# 子目录
 			if( (0 >= maxLevel or maxLevel > level) and (show_all !=0 or not '.' in root[1:]) ):
-				dirUncle = self.forUncle * level
+				# 跳过根目录
 				if( not bRootDir ):
+					dirUncle = self.forUncle * (level-1)
 					text = prefix + dirUncle + self.forBro + curDir
 					insertTextLine( text,	line,	buf )
 					line += 1
 					level+= 1
-
-				if(0 >= maxLevel or maxLevel > level):	# 文件
-					fileUncle = self.forUncle * (level)
+				else:
+					bRootDir = False
+				# 文件
+				if(0 >= maxLevel or maxLevel > level):
+					fileUncle = self.forUncle * (level-1)
 					for f in files[1:]:
 						if( show_all != 0 or '.' != f[0] ):
 							text = prefix + fileUncle + self.forBro + f
 							insertTextLine( text,	line,	buf )
 							line += 1
-					if( len(files) > 0 and ( show_all != 0 or '.' != f[0] ) ):
+					if( len(files) > 0 and ( show_all != 0 or '.' != files[0] ) ):
 							text = prefix + fileUncle + self.last + files[0]
 							insertTextLine( text,	line,	buf )
 							line += 1
-			if(bRootDir):
-				bRootDir = False
 		self.EraseFakeUncle(startLine, line-1, buf)
 
 	def EraseFakeUncle(self, startLine, endLine, buf, firstCall=True):
