@@ -6,7 +6,7 @@
 ##!  包含类Tag Lang{ Text: Cplus Shell Python Lua VimL }。实现向以上语言的代码文件插入自动化注释（行、文件头、函数、类等）功能
 ##!  @file	fcmt.py
 ##!  @author	fstone.zh@foxmail.com
-##!  @date	2016-12-14
+##!  @date	2016-12-20
 ##!  @version	0.1.0
 ############################################################
 
@@ -100,7 +100,7 @@ class Lang:
 		'普通文本'
 		# 已选的标签
 		tag_file 	= [ BRIEF, DETAIL, DETAIL, FILE, AUTHOR, DATE, VERSION ]
-		tag_class 	= [ BRIEF, DETAIL, DETAIL ]
+		tag_class 	= [ BRIEF, DETAIL, DATE ]
 		tag_function 	= [ BRIEF, DETAIL, DETAIL, PARAM, RETURN, DATE ]
 		# 标识符      _/字母    字母/数字
 		reId 	= r"(?: [a-zA-Z_] [a-zA-Z_0-9]* )"
