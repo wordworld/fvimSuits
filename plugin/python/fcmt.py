@@ -6,7 +6,7 @@
 ##!  包含类Tag Lang{ Text: Cplus Shell Python Lua VimL }。实现向以上语言的代码文件插入自动化注释（行、文件头、函数、类等）功能
 ##!  @file	fcmt.py
 ##!  @author	fstone.zh@foxmail.com
-##!  @date	2016-12-20
+##!  @date	2016-12-24
 ##!  @version	0.1.0
 ############################################################
 
@@ -311,7 +311,7 @@ class Lang:
 		tag_function 	= [ BRIEF, DETAIL, DETAIL, PARAM, OUTPUT, AUTHOR, DATE ]
 		def __init__( self ):
 			self.name 	= Lang.SHELL
-			self.syntax 	= [ "", ".sh", ".SH", ".shell", ".Shell", ".svr", ".svn", ".bashrc", ".bash_profile", ".gdb", ".dump", ".mk" ]
+			self.syntax 	= [ "", ".sh", ".SH", ".shell", ".Shell", ".svr", ".svn", ".bashrc", ".bash_profile", ".gdb", ".dump", ".mk", ".muttrc" ]
 			self.line 	= "# "
 			self.start 	= ""
 			self.middle 	= "##! "
@@ -539,7 +539,7 @@ class Comment:
 				line -= 1
 			lineCnt = len( buf )
 			line = lineRange[1] + 1
-			while( lineCnt >= lineRange[1] and self.StartWithSomeOf( buf[ line-1 ], cmtSymbols ) ):
+			while( lineCnt >= line and self.StartWithSomeOf( buf[ line-1 ], cmtSymbols ) ):
 				lineRange[1] = line
 				line += 1
 			return True
