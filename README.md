@@ -5,22 +5,22 @@ vim套装 fvimSuits
 
 1.安装
 --------------------
-(1) 首次需 git 安装
-	安装 git		：$sudo apt-get install git
-	下载 fvimSuits	：$git clone git://github.com/wordworld/fvimSuits.git
-	下载、部署插件 (下载过程用时较长，请耐心等待)：$cd fvimSuits && ./deploy_vim_plugin.sh
-(2) 移植已经安装好的 fvimSuits 到其他电脑
-	复制整个 $HOME/.vim/ 目录到其他 Linux 主机的 $HOME 目录
-	部署插件		：$cd ~/.vim/bundle/fcmt && ./portable_deploy_vim_plugin.sh
+(1) 首次需 git 安装<br/>
+	安装 git		：$sudo apt-get install git<br/>
+	下载 fvimSuits	：$git clone git://github.com/wordworld/fvimSuits.git<br/>
+	下载、部署插件 (下载过程用时较长，请耐心等待)：$cd fvimSuits && ./deploy_vim_plugin.sh <br/>
+(2) 移植已经安装好的 fvimSuits 到其他电脑<br/>
+	复制整个 $HOME/.vim/ 目录到其他 Linux 主机的 $HOME 目录<br/>
+	部署插件		：$cd ~/.vim/bundle/fcmt && ./portable_deploy_vim_plugin.sh<br/>
 
 2.使用
 --------------------
 ### 作者编写的插件
-注释工具 fcmt
-	快捷键 m （光标在文件前10行）：自动生成文件头注释，可自定义如作者信息、文件名、更新日期等内容
-	快捷键 m （光标在函数名所在行）：自动生成函数注释，可自定义包括摘要说明、参数、返回值等内容
-	快捷键 f ：注释/取消注释光标所在行
-	快捷键 Ctrl+l ：添加/删除间隔注释行
+注释工具 fcmt<br/>
+	快捷键 m （光标在文件前10行）：自动生成文件头注释，可自定义如作者信息、文件名、更新日期等内容<br/>
+	快捷键 m （光标在函数名所在行）：自动生成函数注释，可自定义包括摘要说明、参数、返回值等内容<br/>
+	快捷键 f ：注释/取消注释光标所在行<br/>
+	快捷键 Ctrl+l ：添加/删除间隔注释行<br/>
 
 ### 插件管理器 pathogen
 	包含 ~/.vim/autoload/pathogen.vim 和 ~/.vim/bundle 目录。
