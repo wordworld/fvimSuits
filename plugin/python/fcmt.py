@@ -6,7 +6,7 @@
 ##!  包含类Tag Lang{ Text: Cplus Shell Python Lua VimL }。实现向以上语言的代码文件插入自动化注释（行、文件头、函数、类等）功能
 ##!  @file	fcmt.py
 ##!  @author	fstone.zh@foxmail.com
-##!  @date	2016-12-24
+##!  @date	2017-01-03
 ##!  @version	0.1.0
 ############################################################
 
@@ -90,6 +90,7 @@ class Lang:
 	LUA 	= "lua" 	# -- 		--[[ 	 ]] 		--[====[ 	 ]====]
 	VIML 	= "vimL" 	# "
 	ASM	= "asm"		# ;
+	PHP	= "php"		# //		/*	*/
 	def __init__( self ):
 		pass
 
@@ -284,6 +285,27 @@ class Lang:
 			self.tStart 	= "/** " 	# 行尾注释：起始符号
 			self.tEnd 	= " */" 	# 行尾注释：结束符号
 
+	##!  @brief	PHP类
+	##!  
+	##!  @date	2017-01-03
+	class Php( Cplus ):
+		'PHP'
+		def __init__( self ):
+			Lang.Cplus.__init__(self)
+			# 语言名称
+			self.name 	= Lang.PHP
+			# 语法对应的文件类型
+			self.syntax 	= [ ".php", ".PHP" ]
+			self.reVar	= r"(?: \s* \$)" + self.reId
+			self.rePara 	= r"(?: \s* \$ ( " + self.reId + r" | \.\.\.) \s*" + "\s* (?= [\,\=\)])  )"
+			# 函数格式
+			self.objFunc 	= zsl.RegCompile( r"\s* function \s* " + self.reId + r"\s* \( \s* "
+					+ r"(?: \s* | \s*\.\.\.\s* | " 
+					+ self.reVar + r"(?: \s*" + self.reAss + r")?" 
+					+ r"(?: \s* \, \s*" + self.reVar + r"(?: \s*" + self.reAss + r")?)*"
+					+ r"(?: \s* ,  \s* \.\.\. \s*)?  ) \s* \)" )
+			# 参数匹配
+			self.objPara 	= zsl.RegCompile( self.rePara, re.I )
 
 	class Asm( Text ):
 		'ASM'
@@ -302,40 +324,6 @@ class Lang:
 			self.tStart	= ";"		# 行尾注释：起始符号
 			self.tEnd	= ""		# 行尾注释：结束符号
 
-
-	##!  @brief	Shell类
-	##!  
-	##!  
-	class Shell( Text ):
-		'Shell'
-		tag_function 	= [ BRIEF, DETAIL, DETAIL, PARAM, OUTPUT, AUTHOR, DATE ]
-		def __init__( self ):
-			self.name 	= Lang.SHELL
-			self.syntax 	= [ "", ".sh", ".SH", ".shell", ".Shell", ".svr", ".svn", ".bashrc", ".bash_profile", ".gdb", ".dump", ".mk", ".muttrc" ]
-			self.line 	= "# "
-			self.start 	= ""
-			self.middle 	= "##! "
-			self.endL	= ""		#	 	结束行	首 注释符
-			self.end 	= ""
-			self.decorator 	= "#"
-			self.tStart 	= "##! " 	# 行尾注释：起始符号
-			self.tEnd 	= ""		# 行尾注释：结束符号
-			# 函数格式
-			self.objFunc 	= zsl.RegCompile( r"\s* function \s*" + self.reId + r"\s* \( \s* \).*" )
-			# 参数匹配
-			self.objPara = zsl.RegCompile( r"( \$\d | \$ \{\s* \d+ \s*\} )\b", re.M )
-
-
-		# 解析参数
-		def GetParameters( self, line, buf ):
-			endLine = len( buf )
-			funcEnd = line
-			while( funcEnd <= endLine ):
-				if( fvim.lineStartWith( "}", funcEnd, buf ) ):
-					break
-				funcEnd += 1
-			# 在函数范围 line : funcEnd 内查找$0 $1 ...
-			return self.objPara.findall( str( buf[ line : funcEnd-1 ] ) )
 
 	##!  @brief	Python类
 	##!  
@@ -360,6 +348,34 @@ class Lang:
 					+ r"(?: \s* \, \s*" + self.reId + r"(?: \s*" + self.reAss + r")?)*"
 					+ r"(?: \s* ,  \s* \.\.\. \s*)?  ) \s* \)" )
 	
+
+	##!  @brief	Shell类
+	##!  
+	##!  
+	class Shell( Python ):
+		'Shell'
+		tag_function 	= [ BRIEF, DETAIL, DETAIL, PARAM, OUTPUT, AUTHOR, DATE ]
+		def __init__( self ):
+			self.name 	= Lang.SHELL
+			Lang.Python.__init__(self)
+			self.name 	= Lang.SHELL
+			self.syntax 	= [ "", ".sh", ".SH", ".shell", ".Shell", ".svr", ".svn", ".bashrc", ".bash_profile", ".gdb", ".dump", ".mk", ".muttrc" ]
+			# 函数格式
+			self.objFunc 	= zsl.RegCompile( r"\s* function \s*" + self.reId + r"\s* \( \s* \).*" )
+			# 参数匹配
+			self.objPara 	= zsl.RegCompile( r"( \$\d | \$ \{\s* \d+ \s*\} )\b", re.M )
+
+		# 解析参数
+		def GetParameters( self, line, buf ):
+			endLine = len( buf )
+			funcEnd = line
+			while( funcEnd <= endLine ):
+				if( fvim.lineStartWith( "}", funcEnd, buf ) ):
+					break
+				funcEnd += 1
+			# 在函数范围 line : funcEnd 内查找$0 $1 ...
+			return self.objPara.findall( str( buf[ line : funcEnd-1 ] ) )
+
 
 	##!  @brief	Lua类
 	##!  
@@ -416,9 +432,8 @@ class Comment:
 	'注释'
 	# 构造函数
 	def __init__( self ):
-		self.langPool 	= [ Lang.Text(), Lang.Cplus(), Lang.Shell(), Lang.Python(), Lang.Lua(), Lang.VimL(), Lang.Asm() ]
+		self.langPool 	= [ Lang.Text(), Lang.Cplus(), Lang.Shell(), Lang.Python(), Lang.Lua(), Lang.VimL(), Lang.Asm(), Lang.Php() ]
 		self.lang 	= self.langPool[ 0 ]
-
 	# 当前语法环境匹配( lang.syntax 与 当前文件匹配 )
 	def MatchSyntax( self, bufIndex = 0 ):
 		ext = fvim.GetFileExtension( bufIndex )
