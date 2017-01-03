@@ -21,6 +21,22 @@ vim套装 fvimSuits
 	快捷键 m （光标在函数名所在行）：自动生成函数注释，可自定义包括摘要说明、参数、返回值等内容<br/>
 	快捷键 f ：注释/取消注释光标所在行<br/>
 	快捷键 Ctrl+l ：添加/删除间隔注释行<br/>
+	末行制表命令：Tbl [row=2] [col=8] [col_width=4] [row_height=1] [prefix=None]<br/>
+	![draw table](https://github.com/wordworld/fvimSuits/raw/master/img/draw_table.png)
+		参数介绍：<br/>
+			row 行数，默认为2<br/>
+			col 列数，默认为8<br/>
+			col_width，列宽，默认为4<br/>
+			row_height，行高，默认为1<br/>
+			prefix，前缀符号，默认 None 则根据 fcmt 支持的行注释语法添加前缀<br/>
+	末行绘制目录树命令：Dir [path='./'] [showPathDepth=0] [prefix=None] [show_all=0]<br/>
+	![draw directory tree](https://github.com/wordworld/fvimSuits/raw/master/img/draw_directory_tree.png)
+		参数介绍：<br/>
+			path，相对/绝对路径，默认为当前目录<br/>
+			showPathDepth， 要显示的目录深度，默认=0递归显示<br/>
+			prefix，同 Tbl 命令中的 prefix<br/>
+			show_all，是否显示全部文件、目录，默认不显示隐藏目录和文件 <br/>
+
 
 ### 插件管理器 pathogen
 	包含 ~/.vim/autoload/pathogen.vim 和 ~/.vim/bundle 目录。
