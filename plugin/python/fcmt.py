@@ -6,7 +6,7 @@
 ##!  包含类Tag Lang{ Text: Cplus Shell Python Lua VimL }。实现向以上语言的代码文件插入自动化注释（行、文件头、函数、类等）功能
 ##!  @file	fcmt.py
 ##!  @author	fstone.zh@foxmail.com
-##!  @date	2017-01-03
+##!  @date	2017-01-13
 ##!  @version	0.1.0
 ############################################################
 
@@ -129,7 +129,7 @@ class Lang:
 		# 参数查找模式
 		objPara 	= zsl.RegCompile( rePara, re.I )
 		# 类格式
-		objClass 	= zsl.RegCompile( r"\s*class \s+(" + reId +")" )
+		objClass 	= zsl.RegCompile( r"\s*class | namespace \s+(" + reId +")" )
 
 		def __init__( self ):
 			self.name 	= Lang.TEXT
@@ -192,7 +192,7 @@ class Lang:
 			Tag.Update( buf )
 			ident = zsl.LeftWhiteSpace( buf[ line - 1 ] )
 			# 首行
-			if( fvim.insertTextLine( ident + self.start + self.decorator * UsrDecoratorCount, line, buf ) ):
+			if( fvim.insertTextLine( ident + self.start + " " + self.decorator * (UsrDecoratorCount-1 or 1), line, buf ) ):
 				line += 1
 			# 中间行
 			for key in self.tag_file:
