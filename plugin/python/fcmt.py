@@ -334,7 +334,7 @@ class Lang:
 			self.name 	= Lang.PYTHON
 			self.syntax 	= [ ".py", ".Py", ".PY", ".python", ".Python" ]
 			self.line 	= "# "
-			self.start 	= ""
+			self.start 	= "##!"
 			self.middle 	= "##!  "
 			self.endL	= ""		#	 	结束行	首 注释符
 			self.end 	= ""
@@ -386,7 +386,7 @@ class Lang:
 			self.name 	= Lang.LUA
 			self.syntax 	= [ ".lua", ".Lua", ".LUA" ]
 			self.line 	= "-- "
-			self.start 	= ""
+			self.start 	= "--!"
 			self.middle 	= "--! "
 			self.endL	= ""		#	 	结束行	首 注释符
 			self.end 	= ""
@@ -410,7 +410,7 @@ class Lang:
 			self.name 	= Lang.VIML
 			self.syntax 	= [ ".vim", ".vimrc" ]
 			self.line 	= "\" "
-			self.start 	= ""
+			self.start 	= "\"!"
 			self.middle 	= "\"! "
 			self.endL	= ""		#	 	结束行	首 注释符
 			self.end 	= ""
