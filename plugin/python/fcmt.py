@@ -6,7 +6,7 @@
 ##!  包含类Tag Lang{ Text: Cplus Shell Python Lua VimL }。实现向以上语言的代码文件插入自动化注释（行、文件头、函数、类等）功能
 ##!  @file	fcmt.py
 ##!  @author	fstone.zh@foxmail.com
-##!  @date	2017-05-31
+##!  @date	2017-06-17
 ##!  @version	0.1.0
 ############################################################
 
@@ -120,7 +120,7 @@ class Lang:
 		# 声明/定义
 		reDD 	= r"(?:" + reDecl + r"(?: \s*" + reAss + ")? )"
 		# 参数
-		rePara 	=  r"(?: (?:" + reType + ")*\s* ( " + reId + r" | \.\.\.) \s*" + reSub + "\s* (?= [\,\=\)])  )"
+		rePara  =  r"(?: \s* ( " + reId + r" | \.\.\. ) \s*" + reSub + "\s* (?= [\,\=\)])  )"
 		
 		# 函数格式
 		objFunc 	= zsl.RegCompile( r"\s*" + reType + r"?\s+" + reScope + "? \s*" + reId  + r"\s* \( "
