@@ -1,13 +1,13 @@
-#!/usr/bin/python
+#!/bin/python
 #coding:UTF-8
 ############################################################
 ##!  @brief	封装了vim基础功能
 ##!  
 ##!  功能包括行操作（删除、插入）、前缀操作（删除、添加）、光标位置、文件信息（路径、名称）等
 ##!  @file	fvim.py
-##!  @path	prj/fvimSuits/plugin/python
+##!  @path	zsl/tool/fcmt/plugin/python
 ##!  @author	fstone.zh@foxmail.com
-##!  @date	2016-12-16
+##!  @date	2017-06-18
 ##!  @version	0.1.0
 ############################################################
 import vim

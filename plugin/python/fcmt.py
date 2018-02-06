@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/bin/python
 #coding:UTF-8
 ############################################################
 ##!  @brief	fcmt工具的主要逻辑 
@@ -6,7 +6,7 @@
 ##!  包含类Tag Lang{ Text: Cplus Shell Python Lua VimL }。实现向以上语言的代码文件插入自动化注释（行、文件头、函数、类等）功能
 ##!  @file	fcmt.py
 ##!  @author	fstone.zh@foxmail.com
-##!  @date	2017-06-17
+##!  @date	2017-06-19
 ##!  @version	0.1.0
 ############################################################
 
@@ -313,7 +313,7 @@ class Lang:
 			# 语言名称
 			self.name	= Lang.ASM
 			# 文件类型
-			self.syntax	= [ ".asm", ".ASM", ".s", ".S", ".inc" ]
+			self.syntax	= [ ".asm", ".ASM", ".s", ".S", ".inc", ".conf" ]
 			# 注释符号
 			self.line	= ";"		# 单行注释符
 			self.start	= ";;"		# 多行注释 	首行 	首 注释符
@@ -359,7 +359,7 @@ class Lang:
 			self.name 	= Lang.SHELL
 			Lang.Python.__init__(self)
 			self.name 	= Lang.SHELL
-			self.syntax 	= [ "", ".sh", ".SH", ".shell", ".Shell", ".svr", ".svn", ".bashrc", ".bash_profile", ".gdb", ".dump", ".mk", ".muttrc" ]
+			self.syntax 	= [ "", ".sh", ".SH", ".shell", ".Shell", ".svr", ".svn", ".bashrc", ".bash_profile", ".gdb", ".dump", ".mk", ".muttrc", ".pl" ]
 			# 函数格式
 			self.objFunc 	= zsl.RegCompile( r"\s* function \s*" + self.reId + r"\s* \( \s* \).*" )
 			# 参数匹配

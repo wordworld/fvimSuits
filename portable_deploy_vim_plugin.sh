@@ -4,9 +4,9 @@
 ##! 
 ##! 
 ##! @file	portable_deploy_vim_plugin.sh
-##! @path	prj/fvimSuits
+##! @path	zsl/tool/fcmt
 ##! @author	fstone.zh@foxmail.com
-##! @date	2016-12-16
+##! @date	2017-08-30
 ##! @version	0.1.0
 ############################################################
 if [ -f "zsl.sh" ];then	bash zsl.sh setup_finclude_cmd;fi
@@ -47,7 +47,8 @@ vim_cfg_item=(
 'set incsearch'		# 匹配串 即时定位
 'set hlsearch'		# 匹配串 高亮显示
 'nnoremap s :w<CR>'	# s 保存
-'map <C-w> :q<CR>' 	# Ctrl+w 退出
+'map <C-d> :q<CR>' 	# Ctrl+w 退出
+'map <C-z> :shell<CR>' 	# Ctrl+z vim 中打开 shell
 'map <F7> :w<CR> :!clear<CR> :!g++ -std=c++11 -g % -o %:h/%:r<CR>'	# F7 g++编译
 'map <F9> :!chmod +x %:h/%:r<CR> :!clear<CR> :!./%:h/%:r<CR>'		# F9 运行
 'map <F5> :!gdb %:h/%:r<CR>'						# F5 gdb调试

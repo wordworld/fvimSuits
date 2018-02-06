@@ -3,13 +3,15 @@
 ##! 
 ##! 
 ##! @file	zsl.sh
-##! @author	Fstone's ComMent Tool
-##! @date	2016-11-22
+##! @author	fstone.zh@foxmail.com
+##! @date	2017-07-19
 ##! @version	0.1.3
 ############################################################
 if [ ! "$__ZSL_H__" ] ;then
 __ZSL_H__="zsl.sh"
 # ############################################################
+zsl_run_log="run_start.log"
+zsl_cl_log="cl_make.log"
 
 ##! @brief	设置 TEST 变量
 ##! 
@@ -403,8 +405,8 @@ function TimeElapsed()
 	local start=`TimeFormat $1 $2`
 	local end=`TimeFormat $3 $4`
 	local diff=`TimeDiff $1 $2 $3 $4`
-	local day=`date +%m-%d`
-	echo "$day ( $start ~ $end ) time elapsed $diff"
+	local day=`date +%Y-%m-%d`
+	echo "$day | $start ~ $end | $diff"
 }
 
 ##! @brief	查找svn版本号
@@ -576,7 +578,7 @@ esac
 if [ ! -f "$inc_dir$inc_file" ];then
 	$TEST echo $ERR_FILE $inc_dir$inc_file
 else
-	$TEST echo . $inc_dir$inc_file ${@:3}
+	$TEST echo . $inc_dir$inc_file ${inc_para[@]:2}
 fi
 }
 ((__END_INC__=$LINENO-2))
