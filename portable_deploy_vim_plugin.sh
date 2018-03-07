@@ -4,9 +4,9 @@
 ##! 
 ##! 
 ##! @file	portable_deploy_vim_plugin.sh
-##! @path	zsl/tool/fcmt
+##! @path	.vim/bundle/fcmt
 ##! @author	fstone.zh@foxmail.com
-##! @date	2017-08-30
+##! @date	2018-03-07
 ##! @version	0.1.0
 ############################################################
 if [ -f "zsl.sh" ];then	bash zsl.sh setup_finclude_cmd;fi
@@ -124,7 +124,7 @@ code_c=("c.vim" "c" "https://github.com/vim-scripts/c.vim")
 
 # 10.[6] 配色
 color_theme=("PaperColor" "papercolor" "git://github.com/vim-scripts/PaperColor.vim.git")
-cfg_color_theme=("let g:PaperColor_Dark_Override = { 'background' : '#1c1c1c', 'cursorline' : '#abcdef', 'matchparen' : '#3a3a3a', 'comment' : '#5f875f'  }"
+cfg_color_theme=("let g:PaperColor_Dark_Override = { 'background' : '#1c1c1c', 'cursorline' : '#262626', 'matchparen' : '#3a3a3a', 'comment' : '#5f875f'  }"
 	"let g:PaperColor_Light_Override = { 'background' : '#abcdef', 'cursorline' : '#dfdfff', 'matchparen' : '#d6d6d6' , 'comment' : '#8e908c'  }"
 	"set t_Co=256"
 	"set background=dark"
