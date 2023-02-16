@@ -4,9 +4,9 @@
 ##! 
 ##! 
 ##! @file	deploy_vim_plugin.sh
-##! @path	prj/fvimSuits
+##! @path	.vim/bundle/fcmt
 ##! @author	fstone.zh@foxmail.com
-##! @date	2016-12-16
+##! @date	2023-02-16
 ##! @version	0.1.2
 ############################################################
 if [ -f "zsl.sh" ];then	bash zsl.sh setup_finclude_cmd;fi
@@ -50,4 +50,8 @@ GitCheck "${code_c[@]}"
 # 10. 配色
 GitCheck "${color_theme[@]}"
 sed -i 's/\r//g' $dir_bundle/${color_theme[1]}/colors/PaperColor.vim
+
+# 11. 状态栏
+GitCheck "${status_bar[@]}"
+GitCheck "${status_bar_themes[@]}"
 

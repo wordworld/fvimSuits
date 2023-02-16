@@ -6,7 +6,7 @@
 ##! @file	portable_deploy_vim_plugin.sh
 ##! @path	.vim/bundle/fcmt
 ##! @author	fstone.zh@foxmail.com
-##! @date	2018-03-07
+##! @date	2023-02-16
 ##! @version	0.1.0
 ############################################################
 if [ -f "zsl.sh" ];then	bash zsl.sh setup_finclude_cmd;fi
@@ -52,6 +52,13 @@ vim_cfg_item=(
 'map <F7> :w<CR> :!clear<CR> :!g++ -std=c++11 -g % -o %:h/%:r<CR>'	# F7 g++编译
 'map <F9> :!chmod +x %:h/%:r<CR> :!clear<CR> :!./%:h/%:r<CR>'		# F9 运行
 'map <F5> :!gdb %:h/%:r<CR>'						# F5 gdb调试
+
+# 态栏主题 vim-airline-themes settings
+'let g:airline_powerline_fonts=1'
+"let g:airline_theme='distinguished'"
+'let g:airline#extensions#tabline#enabled = 1'
+# 去掉状态栏右端红色警告
+"let g:airline_section_warning = ''"
 
 # 光标可从行首/末跳到另一行
 'set whichwrap'
@@ -131,3 +138,8 @@ cfg_color_theme=("let g:PaperColor_Dark_Override = { 'background' : '#1c1c1c', '
 	"colorscheme PaperColor")
 GitCheck "${color_theme[@]:0:2}"
 $TEST FindSetLines $vimrc "${cfg_color_theme[0]}" "${cfg_color_theme[@]}"
+
+# 11. 状态栏
+status_bar=("AirLine" "airline" "https://github.com/vim-airline/vim-airline.git")
+status_bar_themes=("AirLineThemes" "airline-themes" "https://github.com/vim-airline/vim-airline-themes.git")
+
