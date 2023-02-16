@@ -50,7 +50,7 @@ def ParseFileExtension( fullFileName ):
 	import os.path
 	fileName=ParseFileName(fullFileName)
 	root, ext = os.path.splitext( fileName )
-	if( not cmp(ext, "" ) ):
+	if( "" == ext ):
 		if( len(root) > 0 and root[0] == '.' ):
 			ext=root
 			root=""

@@ -17,7 +17,7 @@ endif
 let s:install_dir = escape(expand('<sfile>:p:h'), '\')
 
 " 初始化
-python<<EOF
+python3<<EOF
 import vim
 sys.path.append( str( vim.eval( "s:install_dir" ) ) + "/python" )
 EOF
@@ -28,7 +28,7 @@ EOF
 nnoremap cf :call DoCmtCurLine()<CR>
 
 function! DoCmtCurLine()
-python<<EOF
+python3<<EOF
 import fcmt
 cmt = fcmt.Comment()
 cmt.ValidDo( )
@@ -41,7 +41,7 @@ endfunction
 nnoremap df :call UndoCmtCurLine()<CR>
 
 function! UndoCmtCurLine()
-python<<EOF
+python3<<EOF
 import fcmt
 cmt = fcmt.Comment()
 cmt.ValidUndo( )
@@ -54,7 +54,7 @@ endfunction
 nnoremap f :call CmtCurLineToggle()<CR>
 
 function! CmtCurLineToggle()
-python<<EOF
+python3<<EOF
 import fcmt
 cmt = fcmt.Comment()
 cmt.CommentToggle( )
@@ -67,7 +67,7 @@ endfunction
 nnoremap m :call CmtModule()<CR>
 
 function! CmtModule()
-python<<EOF
+python3<<EOF
 import fcmt
 cmt = fcmt.Comment()
 cmt.Module( )
@@ -80,7 +80,7 @@ endfunction
 nnoremap <C-L> :call CmtSeparatorToggle()<CR>
 
 function! CmtSeparatorToggle()
-python<<EOF
+python3<<EOF
 import fcmt
 cmt = fcmt.Comment()
 cmt.SeparatorToggle()
@@ -93,7 +93,7 @@ endfunction
 nnoremap t :call CmtLineTailToggle()<CR>
 
 function! CmtLineTailToggle()
-python<<EOF
+python3<<EOF
 import fcmt
 cmt = fcmt.Comment()
 cmt.LineTailToggle()
@@ -102,7 +102,7 @@ endfunction
 
 " 保存时自动更新 
 function! CmtAutoUpdate()
-pytho<<EOF
+python3<<EOF
 import fcmt
 cmt = fcmt.Comment()
 cmt.AutoUpdate()
@@ -120,7 +120,7 @@ autocmd BufWritePre * call CmtAutoUpdate()
 "! @return	无
 "! @date	2016-12-13
 function! DrawTable(...)
-python<<EOF
+python3<<EOF
 import fcmt
 rcwh=[2, 8, 4, 1, None] # 默认2行8列，列宽4,行高1, 前缀 None
 cnt = int(vim.eval("a:0"))
@@ -144,7 +144,7 @@ endfunction
 "! @return	无
 "! @date	2016-12-13
 function! DrawDir(...)
-python<<EOF
+python3<<EOF
 import fcmt
 # 默认绘制当前目录, 递归绘制, 无前缀, 不显示全部
 args=[ "./", 0, None, 0 ]

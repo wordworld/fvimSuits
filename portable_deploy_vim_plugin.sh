@@ -87,19 +87,19 @@ $TEST FindSetLines $vimrc "${cfg_plugin_mgr[0]}" "${cfg_plugin_mgr[@]}"
 src_comment=("fvimSuits" "fcmt" "git://github.com/wordworld/fvimSuits.git")
 
 # 3. 自动完成括号输入 auto-pairs
-brackets_complete=("autopairs" "auto-pairs" "git://github.com/jiangmiao/auto-pairs.git")
+brackets_complete=("autopairs" "auto-pairs" "https://github.com/jiangmiao/auto-pairs.git")
 
 # 4.[3] 文件目录树 NERDTree
-directory_tree=("NERDTree" "nerdtree" "git://github.com/scrooloose/nerdtree.git")
+directory_tree=("NERDTree" "nerdtree" "https://github.com/scrooloose/nerdtree.git")
 cfg_directory_tree=( "map <C-t> :NERDTreeToggle<CR>")
 GitCheck "${directory_tree[@]:0:2}"
 $TEST FindSetLines $vimrc "${cfg_directory_tree[0]}" "${cfg_directory_tree[0]}"
 
 # 5. 文件标签
-tab_label=( "MiniBufExplorer" "minibufexplorer" "git://github.com/vim-scripts/minibufexplorerpp.git")
+tab_label=( "MiniBufExplorer" "minibufexplorer" "https://github.com/vim-scripts/minibufexplorerpp.git")
 
 # 6.[4] 符号定义列表 TagList
-taglist=("TagList" "taglist" "git://github.com/vim-scripts/taglist.vim.git")
+taglist=("TagList" "taglist" "https://github.com/vim-scripts/taglist.vim.git")
 cfg_taglist=(
 	"map <C-a> :TlistToggle<CR>"
 	"let Tlist_Show_One_File=1" 
@@ -111,19 +111,19 @@ GitCheck "${taglist[@]:0:2}"
 $TEST FindSetLines $vimrc "${cfg_taglist[0]}" "${cfg_taglist[@]}"
 
 # 7.[5] 粘贴板
-clipboard=("Yank-Ring" "yank-ring" "git://github.com/vim-scripts/YankRing.vim.git")
+clipboard=("Yank-Ring" "yank-ring" "https://github.com/vim-scripts/YankRing.vim.git")
 cfg_clipboard=("map <C-y> :YRShow<CR>")
 GitCheck "${clipboard[@]:0:2}"
 $TEST FindSetLines $vimrc "${cfg_clipboard[0]}" "${cfg_clipboard[@]}"
 
 # 8. gdb调试
-# gdb_runner=("conque-gdb" "conque-gdb" "git://github.com/vim-scripts/Conque-GDB.git")
+# gdb_runner=("conque-gdb" "conque-gdb" "https://github.com/vim-scripts/Conque-GDB.git")
 
 # 9. c语言
 code_c=("c.vim" "c" "https://github.com/vim-scripts/c.vim")
 
 # 10.[6] 配色
-color_theme=("PaperColor" "papercolor" "git://github.com/vim-scripts/PaperColor.vim.git")
+color_theme=("PaperColor" "papercolor" "https://github.com/vim-scripts/PaperColor.vim.git")
 cfg_color_theme=("let g:PaperColor_Dark_Override = { 'background' : '#1c1c1c', 'cursorline' : '#262626', 'matchparen' : '#3a3a3a', 'comment' : '#5f875f'  }"
 	"let g:PaperColor_Light_Override = { 'background' : '#abcdef', 'cursorline' : '#dfdfff', 'matchparen' : '#d6d6d6' , 'comment' : '#8e908c'  }"
 	"set t_Co=256"

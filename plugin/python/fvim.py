@@ -430,7 +430,7 @@ def GetBuf( bufIndex ):
 		return vim.current.buffer
 	elif( 0 < bufIndex  and  bufIndex <= len( vim.buffers ) ):
 		return vim.buffers[ bufIndex ]
-	print "error: invalid file buffer"
+	print("error: invalid file buffer")
 	return None
 
 ##!  @brief	通过索引获取窗口
@@ -445,7 +445,7 @@ def GetWindow( winIndex ):
 		return vim.current.window
 	elif( 0 < winIndex  and winIndex <= len( vim.windows ) ):
 		return vim.windows[ winIndex ]
-	print "error: invalid window", winIndex
+	print("error: invalid window", winIndex)
 	return None
 
 ##!  @brief	获取当前光标位置
@@ -492,7 +492,7 @@ def GetCurrentColumn():
 def ValidIndex( lineRange , bufIndex=0 ):
 	buf = GetBuf( bufIndex )
 	if( None == buf ):
-		print "error: invalid buffer index:", bufIndex
+		print("error: invalid buffer index:", bufIndex)
 		return None
 	lineCnt = len( buf )
 	if( 0 == lineRange[ 0 ] ):
@@ -510,7 +510,7 @@ def ValidIndex( lineRange , bufIndex=0 ):
 	if( lineRange[ 0 ] > lineRange[ 1 ] ):
 		lineRange[ 0 ], lineRang[ 1 ] = lineRange[ 1 ], lineRang[ 0 ] 
 	if( 0 >= lineRange[ 0 ]  or  lineRange[ 1 ] > lineCnt ):
-		print "error: line number overflow", lineRange[0], lineRange[1]
+		print("error: line number overflow", lineRange[0], lineRange[1])
 		return None
 	return buf
 

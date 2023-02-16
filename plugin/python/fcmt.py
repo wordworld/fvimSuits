@@ -145,7 +145,7 @@ class Lang:
 			
 
 		def Print( self ):
-			print self.name
+			print(self.name)
 
 		# 光标位于 函数名所在行 或 上一行
 		def atFunction( self, line, buf ):
@@ -181,11 +181,11 @@ class Lang:
 				line += 1
 			if( line > endLine ):
 				return
-			if( cmp(  buf[ line - 1 ].strip(),  strSep ) ):
+			if( buf[ line - 1 ].strip() != strSep ):
 				fvim.insertTextLine( ident + strSep, line, buf )
 			else:
 				fvim.deleteLine( line, line, buf )
-			print zsl.GetHomeDir()
+			print(zsl.GetHomeDir())
 
 		# 注释文件头
 		def AnnotateFile( self, line, buf ):
@@ -222,9 +222,9 @@ class Lang:
 				line += 1
 			# 函数tag
 			for key in self.tag_function:
-				if( not cmp(key, PARAM) ):
+				if( key == PARAM ):
 					params = self.GetParameters( line, buf )
-					print params
+					print(params)
 					if( params ):
 						cnt = len(params)
 						i  = 0
@@ -443,7 +443,7 @@ class Comment:
 			if( ext in L.syntax ):
 				self.lang = L
 				return True
-		print "error: not supported file type \"" + ext + "\""
+		print("error: not supported file type \"" + ext + "\"")
 		return False
 
 	# 是否 有效的命令
@@ -544,7 +544,7 @@ class Comment:
 	##!  @date	2016-12-12
 	def Commented(self, lineRange, buf):
 		cmtSymbols = [self.lang.line, self.lang.middle, self.lang.decorator, self.lang.tStart ]
-		line = ( lineRange[0] + lineRange[1] ) / 2
+		line = int(( lineRange[0] + lineRange[1] ) / 2)
 		isCmt = False
 		if( self.StartWithSomeOf( buf[ line-1 ], cmtSymbols) ):
 			lineRange[0] = lineRange[1] = line
