@@ -6,7 +6,7 @@
 ##! @file	portable_deploy_vim_plugin.sh
 ##! @path	.vim/bundle/fcmt
 ##! @author	fstone.zh@foxmail.com
-##! @date	2023-02-16
+##! @date	2023-02-17
 ##! @version	0.1.0
 ############################################################
 if [ -f "zsl.sh" ];then	bash zsl.sh setup_finclude_cmd;fi
@@ -47,6 +47,8 @@ vim_cfg_item=(
 'set incsearch'		# 匹配串 即时定位
 'set hlsearch'		# 匹配串 高亮显示
 'nnoremap s :w<CR>'	# s 保存
+'nnoremap ( :bp<CR>'	# ( 打开上一个文件
+'nnoremap ) :bn<CR>'	# ) 打开下一个文件
 'map <C-d> :q<CR>' 	# Ctrl+w 退出
 'map <C-z> :shell<CR>' 	# Ctrl+z vim 中打开 shell
 'map <F7> :w<CR> :!clear<CR> :!g++ -std=c++11 -g % -o %:h/%:r<CR>'	# F7 g++编译
@@ -56,9 +58,18 @@ vim_cfg_item=(
 # 态栏主题 vim-airline-themes settings
 'let g:airline_powerline_fonts=1'
 "let g:airline_theme='distinguished'"
-'let g:airline#extensions#tabline#enabled = 1'
 # 去掉状态栏右端红色警告
 "let g:airline_section_warning = ''"
+# unicode symbols
+"let g:airline_left_sep = '>'"
+"let g:airline_right_sep = '>'"
+"if !exists('g:airline_symbols')"
+"    let g:airline_symbols = {}"
+"endif"
+"let g:airline_symbols.colnr = ' ℅'"
+"let g:airline_symbols.crypt = '🔒'"
+"let g:airline_symbols.linenr = ' ␊'"
+"let g:airline_symbols.branch = '⎇'"
 
 # 光标可从行首/末跳到另一行
 'set whichwrap'
